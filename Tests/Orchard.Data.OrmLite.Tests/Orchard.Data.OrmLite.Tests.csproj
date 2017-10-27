@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FDE72B6C-5283-4F6E-8BB2-276F0D4447B4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orchard.Data.OrmLite.Tests</RootNamespace>
+    <AssemblyName>Orchard.Data.OrmLite.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration, Version=4.0.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Configuration.4.0.1\lib\net45\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder, Version=1.0.51206.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Practices.ObjectBuilder.dll.3.1.0\lib\2.0\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Serilog.2.5.0\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=4.5.14.0, Culture=neutral, PublicKeyToken=1a5305b4d35033ea, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceStack.Common.Signed.4.5.14\lib\net45\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=4.5.14.0, Culture=neutral, PublicKeyToken=1a5305b4d35033ea, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceStack.Interfaces.4.5.14\lib\portable-wp80+sl5+net45+win8+wpa81+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Logging.Log4Net, Version=4.5.14.0, Culture=neutral, PublicKeyToken=1a5305b4d35033ea, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceStack.Logging.Log4Net.Signed.4.5.14\lib\net45\ServiceStack.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite, Version=4.5.14.0, Culture=neutral, PublicKeyToken=1a5305b4d35033ea, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceStack.OrmLite.Signed.4.5.14\lib\net45\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite.SqlServer, Version=4.5.14.0, Culture=neutral, PublicKeyToken=1a5305b4d35033ea, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceStack.OrmLite.SqlServer.Signed.4.5.14\lib\net45\ServiceStack.OrmLite.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.5.14.0, Culture=neutral, PublicKeyToken=1a5305b4d35033ea, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceStack.Text.Signed.4.5.14\lib\net45\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\AdmArea.cs" />
+    <Compile Include="Entities\AdmRights.cs" />
+    <Compile Include="Entities\AdmRightsType.cs" />
+    <Compile Include="Entities\AdmUserRights.cs" />
+    <Compile Include="Orderable_Tests.cs" />
+    <Compile Include="OrmLiteNUnitTestBase.cs" />
+    <Compile Include="Mappings\AdmAreaMap.cs" />
+    <Compile Include="OrmLiteTestBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AdmAreaTestParallelRepositoryNUnitTests.cs" />
+    <Compile Include="Repositories\AdmAreaTestRepositoryNUnitTests.cs" />
+    <Compile Include="Repositories\AdmArea_Repository_Tests.cs" />
+    <Compile Include="Repositories\AdmUserRights_Repository_Tests.cs" />
+    <Compile Include="Shared\ApiUtilExtensions.cs" />
+    <Compile Include="Shared\BuiltInsFactory.cs" />
+    <Compile Include="Shared\DefaultValues.cs" />
+    <Compile Include="Shared\IModelFactory.cs" />
+    <Compile Include="Shared\ModelFactoryBase.cs" />
+    <Compile Include="Shared\ModelWithComplexTypes.cs" />
+    <Compile Include="Shared\ModelWithComplexTypesFactory.cs" />
+    <Compile Include="Shared\ModelWithCompositeIndexFields.cs" />
+    <Compile Include="Shared\ModelWithFieldsOfDifferentAndNullableTypes.cs" />
+    <Compile Include="Shared\ModelWithFieldsOfDifferentAndNullableTypesFactory.cs" />
+    <Compile Include="Shared\ModelWithFieldsOfDifferentTypes.cs" />
+    <Compile Include="Shared\ModelWithFieldsOfDifferentTypesFactory.cs" />
+    <Compile Include="Shared\ModelWithFieldsOfNullableTypes.cs" />
+    <Compile Include="Shared\ModelWithFieldsOfNullableTypesFactory.cs" />
+    <Compile Include="Shared\ModelWithIdAndName.cs" />
+    <Compile Include="Shared\ModelWithIdOnly.cs" />
+    <Compile Include="Shared\ModelWithIndexFields.cs" />
+    <Compile Include="Shared\ModelWithLongIdAndStringFields.cs" />
+    <Compile Include="Shared\ModelWithMapAndList.cs" />
+    <Compile Include="Shared\ModelWithNamedCompositeIndex.cs" />
+    <Compile Include="Shared\ModelWithNumerics.cs" />
+    <Compile Include="Shared\ModelWithOnlyStringFields.cs" />
+    <Compile Include="Shared\Movie.cs" />
+    <Compile Include="Shared\MultipleTables.cs" />
+    <Compile Include="Shared\Person.cs" />
+    <Compile Include="Shared\Poco.cs" />
+    <Compile Include="Shared\SampleOrderLine.cs" />
+    <Compile Include="Shared\Shipper.cs" />
+    <Compile Include="Shared\ShipperFactory.cs" />
+    <Compile Include="Shared\TaskQueue.cs" />
+    <Compile Include="Shared\UpdateCommandFilter.cs" />
+    <Compile Include="Uow\OrmLiteTransactionManager_Tests.cs" />
+    <Compile Include="Uow\OrmLiteTransactionTests.cs" />
+    <Compile Include="Uow\OrmLiteTransactionUow_Tests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Modules\Orchard.Data.OrmLite\Orchard.Data.OrmLite.csproj">
+      <Project>{0a8cab74-11cf-4a18-816f-6d6e4703da20}</Project>
+      <Name>Orchard.Data.OrmLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Orchard\Orchard.Framework.csproj">
+      <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Tests.Common\Orchard.Tests.Common.csproj">
+      <Project>{4d2c28fc-ba6d-4d5e-a868-d66062c86019}</Project>
+      <Name>Orchard.Tests.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此项目引用这台计算机上缺少的 NuGet 程序包。使用 NuGet 程序包还原可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\..\packages\SourceLink.Create.CommandLine.2.5.0\build\SourceLink.Create.CommandLine.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\SourceLink.Create.CommandLine.2.5.0\build\SourceLink.Create.CommandLine.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\..\packages\SourceLink.Create.CommandLine.2.5.0\build\SourceLink.Create.CommandLine.targets" Condition="Exists('..\..\packages\SourceLink.Create.CommandLine.2.5.0\build\SourceLink.Create.CommandLine.targets')" />
+</Project>

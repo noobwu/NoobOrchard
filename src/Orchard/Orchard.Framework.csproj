@@ -1,0 +1,642 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orchard</RootNamespace>
+    <AssemblyName>Orchard.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET46</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\OrchardBasicCorrectness.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>default</LangVersion>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>
+    </NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>default</LangVersion>
+    <NoWarn>0436</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration, Version=4.0.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Configuration.4.0.1\lib\net45\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extras.DynamicProxy, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Extras.DynamicProxy.4.2.1\lib\net45\Autofac.Extras.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Metrics, Version=0.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Metrics.NET.0.5.3\lib\net45\Metrics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.FileExtensions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Json, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Json.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Xml.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.FileProviders.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.FileProviders.Physical.2.0.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.FileSystemGlobbing.2.0.0\lib\netstandard2.0\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Nito.AsyncEx.4.0.1\lib\net45\Nito.AsyncEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Concurrent, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Nito.AsyncEx.4.0.1\lib\net45\Nito.AsyncEx.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Enlightenment, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Nito.AsyncEx.4.0.1\lib\net45\Nito.AsyncEx.Enlightenment.dll</HintPath>
+    </Reference>
+    <Reference Include="Serialize.Linq, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Serialize.Linq.1.4.0\lib\net45\Serialize.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Interactive.Async, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Interactive.Async.3.1.1\lib\net45\System.Interactive.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Cryptography.Xml.4.4.0\lib\net461\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\Foundatio\CacheClientExtensions.cs" />
+    <Compile Include="Caching\Foundatio\CacheClientOptionsBase.cs" />
+    <Compile Include="Caching\Foundatio\CacheValue.cs" />
+    <Compile Include="Caching\Foundatio\HybridCacheClient.cs" />
+    <Compile Include="Caching\Foundatio\ICacheClient.cs" />
+    <Compile Include="Caching\Foundatio\InMemoryCacheClient.cs" />
+    <Compile Include="Caching\Foundatio\InMemoryCacheClientOptions.cs" />
+    <Compile Include="Caching\Foundatio\NullCacheClient.cs" />
+    <Compile Include="Caching\Foundatio\ScopedCacheClient.cs" />
+    <Compile Include="Collections\DataDictionary.cs" />
+    <Compile Include="Collections\Extensions\ConcurrentDictionaryExtensions.cs" />
+    <Compile Include="Common\AutoMappingUtils.cs" />
+    <Compile Include="Caching\DefaultAsyncTokenProvider.cs" />
+    <Compile Include="Common\ExecUtils.cs" />
+    <Compile Include="Common\PclExport.cs" />
+    <Compile Include="Common\TypeSerializer.cs" />
+    <Compile Include="Common\ValueConstants.cs" />
+    <Compile Include="Data\Common\DbDialectProviderBase.cs" />
+    <Compile Include="Data\Common\IHasDbConnection.cs" />
+    <Compile Include="Data\Common\IDbDialectProvider.cs" />
+    <Compile Include="Data\Common\OrchardConnection.cs" />
+    <Compile Include="Data\Common\OrchardConnectionFactory.cs" />
+    <Compile Include="Data\Compability\System.Transactions.cs" />
+    <Compile Include="Data\DataTablesParser.cs" />
+    <Compile Include="Data\Common\DbConnectionFactory.cs" />
+    <Compile Include="Data\Expressions\ExpressionVisitorExtensions.cs" />
+    <Compile Include="Data\Expressions\ParameterRebinder.cs" />
+    <Compile Include="Data\Expressions\PredicateBuilder.cs" />
+    <Compile Include="Data\Expressions\SqlExpressionVisitor.cs" />
+    <Compile Include="Events\Bus\Entities\DomainEventEntry.cs" />
+    <Compile Include="Events\Bus\Entities\EntityChangedEventData.cs" />
+    <Compile Include="Events\Bus\Entities\EntityChangeEntry.cs" />
+    <Compile Include="Events\Bus\Entities\EntityChangeEventHelper.cs" />
+    <Compile Include="Events\Bus\Entities\EntityChangeReport.cs" />
+    <Compile Include="Events\Bus\Entities\EntityChangeType.cs" />
+    <Compile Include="Events\Bus\Entities\EntityChangingEventData.cs" />
+    <Compile Include="Events\Bus\Entities\EntityCreatedEventData.cs" />
+    <Compile Include="Events\Bus\Entities\EntityCreatingEventData.cs" />
+    <Compile Include="Events\Bus\Entities\EntityDeletedEventData.cs" />
+    <Compile Include="Events\Bus\Entities\EntityDeletingEventData.cs" />
+    <Compile Include="Events\Bus\Entities\EntityEventData.cs" />
+    <Compile Include="Events\Bus\Entities\EntityUpdatedEventData.cs" />
+    <Compile Include="Events\Bus\Entities\EntityUpdatingEventData.cs" />
+    <Compile Include="Events\Bus\Entities\IEntityChangeEventHelper.cs" />
+    <Compile Include="Events\Bus\Entities\NullEntityChangeEventHelper.cs" />
+    <Compile Include="Events\Bus\EventData.cs" />
+    <Compile Include="Events\Bus\FactoryUnregistrar.cs" />
+    <Compile Include="Events\Bus\Handlers\ActionEventHandler.cs" />
+    <Compile Include="Events\Bus\Handlers\IEventHandlerFactory.cs" />
+    <Compile Include="Events\Bus\Handlers\IEventHandlerOfTEventData.cs" />
+    <Compile Include="Events\Bus\Handlers\SingleInstanceHandlerFactory.cs" />
+    <Compile Include="Events\Bus\Handlers\TransientEventHandlerFactory.cs" />
+    <Compile Include="Events\Bus\IEventData.cs" />
+    <Compile Include="Events\Bus\IEventDataWithInheritableGenericArgument.cs" />
+    <Compile Include="Events\Bus\NullEventBus.cs" />
+    <Compile Include="Jobs\WorkItemJob\WorkItemData.cs" />
+    <Compile Include="Jobs\WorkItemJob\WorkItemQueueExtensions.cs" />
+    <Compile Include="Messaging\IMessageBus.cs" />
+    <Compile Include="Messaging\IMessagePublisher.cs" />
+    <Compile Include="Messaging\IMessageSubscriber.cs" />
+    <Compile Include="Messaging\InMemoryMessageBus.cs" />
+    <Compile Include="Messaging\InMemoryMessageBusOptions.cs" />
+    <Compile Include="Messaging\MessageBusBase.cs" />
+    <Compile Include="Messaging\MessageBusData.cs" />
+    <Compile Include="Messaging\MessageBusOptionsBase.cs" />
+    <Compile Include="Messaging\NullMessageBus.cs" />
+    <Compile Include="Metrics\CacheBucketMetricsClientBase.cs" />
+    <Compile Include="Metrics\IHaveSubMetricName.cs" />
+    <Compile Include="Metrics\IMetricsClientStats.cs" />
+    <Compile Include="Metrics\InMemoryMetricsClient.cs" />
+    <Compile Include="Metrics\InMemoryMetricsClientOptions.cs" />
+    <Compile Include="Queues\InMemoryQueue.cs" />
+    <Compile Include="Queues\InMemoryQueueOptions.cs" />
+    <Compile Include="Queues\IQueue.cs" />
+    <Compile Include="Queues\IQueueEntry.cs" />
+    <Compile Include="Queues\MetricsQueueBehavior.cs" />
+    <Compile Include="Queues\QueueBase.cs" />
+    <Compile Include="Queues\QueueBehaviour.cs" />
+    <Compile Include="Queues\QueueEntry.cs" />
+    <Compile Include="Queues\QueueOptionsBase.cs" />
+    <Compile Include="Queues\QueueStatSummary.cs" />
+    <Compile Include="Serializer\IHaveSerializer.cs" />
+    <Compile Include="Serializer\ISerializer.cs" />
+    <Compile Include="Serializer\JsonNetSerializer.cs" />
+    <Compile Include="Threading\Locking\Foundatio\CacheLockProvider.cs" />
+    <Compile Include="Threading\Locking\Foundatio\DisposableLock.cs" />
+    <Compile Include="Threading\Locking\Foundatio\ILockProvider.cs" />
+    <Compile Include="Threading\Locking\Foundatio\ThrottlingLockProvider.cs" />
+    <Compile Include="Utility\CloneExpressionBuilder.cs" />
+    <Compile Include="Utility\CloneExpressionHelper.cs" />
+    <Compile Include="Utility\Extensions\ConcurrentQueueExtensions.cs" />
+    <Compile Include="Utility\Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Data\Common\IDbConnectionFactory.cs" />
+    <Compile Include="DisposeAction.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasAction.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasGuidId.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasId.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasIntId.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasLongId.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasNamed.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasNamedCollection.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasNamedList.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasResponseStatus.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IHasStringId.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IMeta.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IResponseStatusConvertible.cs" />
+    <Compile Include="Domain\Entities\ResponseError.cs" />
+    <Compile Include="Domain\Entities\ResponseStatus.cs" />
+    <Compile Include="Domain\Uow\DefaultDataFilters.cs" />
+    <Compile Include="Domain\Uow\Transaction\ITransactionInterceptor.cs" />
+    <Compile Include="Domain\Uow\Transaction\UowTransactionAttribute.cs" />
+    <Compile Include="Environment\AutofacUtil\ConfigurationSettingsReaderResources.cs" />
+    <Compile Include="Environment\AutofacUtil\EmbeddedConfiguration.cs" />
+    <Compile Include="Environment\AutofacUtil\EmbeddedConfigurationProvider.cs" />
+    <Compile Include="Environment\CollectionOrderModule.cs" />
+    <Compile Include="Environment\Configuration\WebConfig.cs" />
+    <Compile Include="Environment\ApplicationStarter.cs" />
+    <Compile Include="Environment\HttpUtils.cs" />
+    <Compile Include="Environment\RequestHelper.cs" />
+    <Compile Include="Environment\Runtime\IAmbientDataContext.cs" />
+    <Compile Include="Environment\Runtime\IAmbientScopeProvider.cs" />
+    <Compile Include="Environment\Runtime\Remoting\CallContextAmbientDataContext.cs" />
+    <Compile Include="Environment\Runtime\Remoting\DataContextAmbientScopeProvider.cs" />
+    <Compile Include="Exceptions\InitializationException.cs" />
+    <Compile Include="Collections\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Collections\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Collections\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Collections\Extensions\ListExtensions.cs" />
+    <Compile Include="ContentManagement\IUpdateModel.cs" />
+    <Compile Include="ContentManagement\XmlHelper.cs" />
+    <Compile Include="Data\ActiveTransactionProviderArgs.cs" />
+    <Compile Include="Caching\DefaultCacheContextAccessor.cs" />
+    <Compile Include="Caching\DefaultParallelCacheContext.cs" />
+    <Compile Include="Caching\ICacheContextAccessor.cs" />
+    <Compile Include="Caching\IParallelCacheContext.cs" />
+    <Compile Include="Caching\IAsyncTokenProvider.cs" />
+    <Compile Include="Caching\Signals.cs" />
+    <Compile Include="Collections\IPageOfItems.cs" />
+    <Compile Include="Collections\PageOfItems.cs" />
+    <Compile Include="Data\DoNotMapAttribute.cs" />
+    <Compile Include="Data\Expressions\ExpressionExtensions.cs" />
+    <Compile Include="Data\IActiveTransactionProvider.cs" />
+    <Compile Include="Data\Orderable.cs" />
+    <Compile Include="Data\QueryableExtensions.cs" />
+    <Compile Include="Domain\Uow\InnerUnitOfWorkCompleteHandle.cs" />
+    <Compile Include="Domain\Uow\IUnitOfWork.cs" />
+    <Compile Include="Domain\Uow\Transaction\InnerTransactionCompleteHandle.cs" />
+    <Compile Include="Domain\Uow\Transaction\ITransactionCompleteHandle.cs" />
+    <Compile Include="Domain\Uow\IUnitOfWorkCompleteHandle.cs" />
+    <Compile Include="Domain\Uow\IUnitOfWorkManager.cs" />
+    <Compile Include="Domain\Uow\NullUnitOfWork.cs" />
+    <Compile Include="Domain\Uow\Transaction\InnerTransactionUnitOfWork.cs" />
+    <Compile Include="Domain\Uow\Transaction\ITransactionUnitOfWork.cs" />
+    <Compile Include="Domain\Uow\Transaction\ITransactionManager.cs" />
+    <Compile Include="Domain\Repositories\RepositoryBase.cs" />
+    <Compile Include="Domain\Uow\DbConcurrencyException.cs" />
+    <Compile Include="Domain\Entities\AggregateRoot.cs" />
+    <Compile Include="Domain\Entities\Entity.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IAggregateRoot.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IEntity.cs" />
+    <Compile Include="Domain\Entities\Interfaces\IEntityOfTPrimaryKey.cs" />
+    <Compile Include="Domain\Entities\Interfaces\ISoftDelete.cs" />
+    <Compile Include="Domain\Repositories\IRepository.cs" />
+    <Compile Include="Domain\Repositories\IRepositoryOfTEntity.cs" />
+    <Compile Include="Domain\Repositories\IRepositoryOfTEntityAndTPrimaryKey.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkBase.cs" />
+    <Compile Include="Domain\Uow\Transaction\TransactionDefaultOptions.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkDefaultOptions.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkFailedEventArgs.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkManager.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkOptions.cs" />
+    <Compile Include="Domain\Values\ValueObject.cs" />
+    <Compile Include="Environment\ApplicationEnvironment.cs" />
+    <Compile Include="Environment\AutofacUtil\ConfigurationSettingsReaderConstants.cs" />
+    <Compile Include="Environment\AutofacUtil\LifetimeScopeContainer.cs" />
+    <Compile Include="Environment\Configuration\AppConfigurationAccessor.cs" />
+    <Compile Include="Environment\Configuration\DbConfig.cs" />
+    <Compile Include="Environment\Configuration\DictionaryBasedConfig.cs" />
+    <Compile Include="Environment\Configuration\ExtensionLocations.cs" />
+    <Compile Include="Environment\Configuration\IAppConfigurationAccessor.cs" />
+    <Compile Include="Environment\Configuration\IDictionaryBasedConfig.cs" />
+    <Compile Include="Environment\Configuration\IShellSettingsManager.cs" />
+    <Compile Include="Environment\Configuration\IShellSettingsManagerEventHandler.cs" />
+    <Compile Include="Environment\Configuration\NameValueBasedConfig.cs" />
+    <Compile Include="Environment\Configuration\ShellSettings.cs" />
+    <Compile Include="Environment\Configuration\ShellSettingsManager.cs" />
+    <Compile Include="Environment\Configuration\ShellSettingsSerializer.cs" />
+    <Compile Include="Environment\Configuration\TenantState.cs" />
+    <Compile Include="Environment\Extensions\DefaultCriticalErrorProvider.cs" />
+    <Compile Include="Environment\Extensions\ExtensionEntry.cs" />
+    <Compile Include="Environment\Extensions\Folders\CoreModuleFolders.cs" />
+    <Compile Include="Environment\Extensions\Folders\ExtensionHarvester.cs" />
+    <Compile Include="Environment\Extensions\Folders\IExtensionFolders.cs" />
+    <Compile Include="Environment\Extensions\Folders\IExtensionHarvester.cs" />
+    <Compile Include="Environment\Extensions\Folders\ModuleFolders.cs" />
+    <Compile Include="Environment\Extensions\Folders\ThemeFolders.cs" />
+    <Compile Include="Environment\Extensions\Helpers\PathHelpers.cs" />
+    <Compile Include="Environment\Extensions\ICriticalErrorProvider.cs" />
+    <Compile Include="Environment\Extensions\IExtensionLoaderCoordinator.cs" />
+    <Compile Include="Environment\Extensions\Models\DefaultExtensionTypes.cs" />
+    <Compile Include="Environment\Extensions\Models\ExtensionDescriptor.cs" />
+    <Compile Include="Environment\Extensions\Models\Feature.cs" />
+    <Compile Include="Environment\Extensions\Models\FeatureDescriptor.cs" />
+    <Compile Include="Environment\Extensions\Models\LifecycleStatus.cs" />
+    <Compile Include="Environment\Extensions\OrchardFeatureAttribute.cs" />
+    <Compile Include="Environment\Extensions\OrchardSuppressDependencyAttribute.cs" />
+    <Compile Include="Environment\IApplicationEnvironment.cs" />
+    <Compile Include="Environment\IAssemblyBuilder.cs" />
+    <Compile Include="Environment\IAssemblyLoader.cs" />
+    <Compile Include="Environment\IAssemblyNameResolver.cs" />
+    <Compile Include="Environment\IBuildManager.cs" />
+    <Compile Include="Environment\IOrchardShellEvents.cs" />
+    <Compile Include="Environment\IWorkContextEvents.cs" />
+    <Compile Include="Environment\Warmup\WarmupUtility.cs" />
+    <Compile Include="Environment\WorkContextAccessor.cs" />
+    <Compile Include="Environment\WorkContextImplementation.cs" />
+    <Compile Include="Environment\WorkContextModule.cs" />
+    <Compile Include="Environment\WorkContextProperty.cs" />
+    <Compile Include="Events\Bus\EventBus.cs" />
+    <Compile Include="Events\DelegateHelper.cs" />
+    <Compile Include="Events\Bus\EventsInterceptor.cs" />
+    <Compile Include="Events\EventsModule.cs" />
+    <Compile Include="Events\EventsRegistrationSource.cs" />
+    <Compile Include="Events\Bus\IEventBus.cs" />
+    <Compile Include="Events\Bus\Handlers\IEventHandler.cs" />
+    <Compile Include="Exceptions\DefaultException.cs" />
+    <Compile Include="Exceptions\DefaultExceptionPolicy.cs" />
+    <Compile Include="Exceptions\ExceptionExtensions.cs" />
+    <Compile Include="Exceptions\IExceptionPolicy.cs" />
+    <Compile Include="FileSystems\FileUtils.cs" />
+    <Compile Include="FileSystems\RecyclableMemoryStream.cs" />
+    <Compile Include="FileSystems\StreamExtensions.cs" />
+    <Compile Include="Common\IHasErrorCode.cs" />
+    <Compile Include="Infrastructure\Singleton.cs" />
+    <Compile Include="Logging\ConsoleLoggerFactory.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\DiagnosticsLogger.cs" />
+    <Compile Include="Logging\GenericLogger.cs" />
+    <Compile Include="Logging\LogHelper.cs" />
+    <Compile Include="Logging\LoggerManager.cs" />
+    <Compile Include="Logging\StringBuilderLogger.cs" />
+    <Compile Include="Logging\TestLogFactory.cs" />
+    <Compile Include="Logging\TestLogger.cs" />
+    <Compile Include="Logging\TraceLogger.cs" />
+    <Compile Include="Common\NamedTypeSelector.cs" />
+    <Compile Include="Common\NameValue.cs" />
+    <Compile Include="Metrics\BufferedMetricsClientBase.cs" />
+    <Compile Include="Metrics\CounterStat.cs" />
+    <Compile Include="Metrics\GaugeStat.cs" />
+    <Compile Include="Metrics\IMetricsClient.cs" />
+    <Compile Include="Metrics\MetricKey.cs" />
+    <Compile Include="Metrics\MetricsClientOptionsBase.cs" />
+    <Compile Include="Metrics\MetricTimer.cs" />
+    <Compile Include="Metrics\NullMetricsClient.cs" />
+    <Compile Include="Metrics\StatsDMetricsClient.cs" />
+    <Compile Include="Metrics\TimingStat.cs" />
+    <Compile Include="Net\Mail\EmailSenderBase.cs" />
+    <Compile Include="Net\Mail\EmailSettingNames.cs" />
+    <Compile Include="Net\Mail\IEmailSender.cs" />
+    <Compile Include="Net\Mail\IEmailSenderConfiguration.cs" />
+    <Compile Include="Net\Mail\NullEmailSender.cs" />
+    <Compile Include="Net\Mail\Smtp\ISmtpEmailSender.cs" />
+    <Compile Include="Net\Mail\Smtp\ISmtpEmailSenderConfiguration.cs" />
+    <Compile Include="Net\Mail\Smtp\SmtpEmailSender.cs" />
+    <Compile Include="Orleans\OrleansExtension.cs" />
+    <Compile Include="Pools\ObjectPool.cs" />
+    <Compile Include="Pools\PooledObject.cs" />
+    <Compile Include="Pools\SharedPoolExtensions.cs" />
+    <Compile Include="Pools\SharedPools.cs" />
+    <Compile Include="Pools\StringBuilderPool.cs" />
+    <Compile Include="Reflection\AssemblyUtils.cs" />
+    <Compile Include="Reflection\Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Reflection\Extensions\AttributeExtensions.cs" />
+    <Compile Include="Reflection\Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="PlatformExtensions.cs" />
+    <Compile Include="Reflection\Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Reflection\Extensions\TypeExtensions.cs" />
+    <Compile Include="Reflection\ReflectionHelper.cs" />
+    <Compile Include="Security\CreateUserParams.cs" />
+    <Compile Include="Security\CurrentUserWorkContext.cs" />
+    <Compile Include="Security\IMembershipService.cs" />
+    <Compile Include="Security\IMembershipSettings.cs" />
+    <Compile Include="Security\IMembershipValidationService.cs" />
+    <Compile Include="Security\NullMembershipService.cs" />
+    <Compile Include="Security\PermissionAuthorize.cs" />
+    <Compile Include="Security\Providers\FormsAuthenticationUtils.cs" />
+    <Compile Include="Security\Providers\FormsAuthenticationService.cs" />
+    <Compile Include="Security\RSAUtils.cs" />
+    <Compile Include="Security\SecurityHelper.cs" />
+    <Compile Include="Security\SimpleStringCipher.cs" />
+    <Compile Include="Security\UserIdentifier.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="Services\IServiceBase.cs" />
+    <Compile Include="Services\ServiceBase.cs" />
+    <Compile Include="Support\AssemblyTypeDefinition.cs" />
+    <Compile Include="Support\DoubleConverter.cs" />
+    <Compile Include="Threading\AsyncEvent.cs" />
+    <Compile Include="Threading\Tasks\TaskUtils.cs" />
+    <Compile Include="Text\StringBuilderCache.cs" />
+    <Compile Include="Threading\Tasks\TaskExtensions.cs" />
+    <Compile Include="Threading\AsyncHelper.cs" />
+    <Compile Include="Threading\Extensions\LockExtensions.cs" />
+    <Compile Include="Threading\IAsyncDisposable.cs" />
+    <Compile Include="Threading\InternalAsyncHelper.cs" />
+    <Compile Include="Threading\IRunnable.cs" />
+    <Compile Include="Threading\RunnableBase.cs" />
+    <Compile Include="Threading\RunnableExtensions.cs" />
+    <Compile Include="Threading\ThreadCultureSanitizer.cs" />
+    <Compile Include="Common\TypeConstants.cs" />
+    <Compile Include="Utility\Extensions\ComparableExtensions.cs" />
+    <Compile Include="Utility\Extensions\DayOfWeekExtensions.cs" />
+    <Compile Include="Utility\Extensions\EnumExtensions.cs" />
+    <Compile Include="Utility\Extensions\EventHandlerExtensions.cs" />
+    <Compile Include="Utility\Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Utility\Extensions\IntExtensions.cs" />
+    <Compile Include="Utility\Extensions\ObjectExtensions.cs" />
+    <Compile Include="FileSystems\AppData\AppDataFolder.cs" />
+    <Compile Include="FileSystems\AppData\IAppDataFolder.cs" />
+    <Compile Include="FileSystems\AppData\IAppDataFolderRoot.cs" />
+    <Compile Include="FileSystems\Dependencies\DefaultAssemblyProbingFolder.cs" />
+    <Compile Include="FileSystems\Dependencies\DefaultDependenciesFolder.cs" />
+    <Compile Include="FileSystems\Dependencies\DefaultExtensionDependenciesManager.cs" />
+    <Compile Include="FileSystems\Dependencies\IAssemblyProbingFolder.cs" />
+    <Compile Include="FileSystems\Dependencies\IDependenciesFolder.cs" />
+    <Compile Include="FileSystems\Dependencies\IExtensionDependenciesManager.cs" />
+    <Compile Include="FileSystems\LockFile\DefaultLockFileManager.cs" />
+    <Compile Include="FileSystems\LockFile\ILockFile.cs" />
+    <Compile Include="FileSystems\LockFile\ILockFileManager.cs" />
+    <Compile Include="FileSystems\LockFile\LockFile.cs" />
+    <Compile Include="FileSystems\Media\ConfigurationMimeTypeProvider.cs" />
+    <Compile Include="FileSystems\Media\FileSystemStorageProvider.cs" />
+    <Compile Include="FileSystems\Media\IMimeTypeProvider.cs" />
+    <Compile Include="FileSystems\Media\IStorageFile.cs" />
+    <Compile Include="FileSystems\Media\IStorageFolder.cs" />
+    <Compile Include="FileSystems\Media\IStorageProvider.cs" />
+    <Compile Include="FileSystems\Media\StorageProviderExtensions.cs" />
+    <Compile Include="FileSystems\VirtualPath\DefaultVirtualPathMonitor.cs" />
+    <Compile Include="FileSystems\VirtualPath\DefaultVirtualPathProvider.cs" />
+    <Compile Include="FileSystems\VirtualPath\ICustomVirtualPathProvider.cs" />
+    <Compile Include="FileSystems\VirtualPath\IVirtualPathMonitor.cs" />
+    <Compile Include="FileSystems\VirtualPath\IVirtualPathProvider.cs" />
+    <Compile Include="FileSystems\WebSite\IWebSiteFolder.cs" />
+    <Compile Include="FileSystems\WebSite\WebSiteFolder.cs" />
+    <Compile Include="Dependency\IDependency.cs" />
+    <Compile Include="IMapper.cs" />
+    <Compile Include="Reflection\InvokeExtensions.cs" />
+    <Compile Include="IWorkContextAccessor.cs" />
+    <Compile Include="Utility\Extensions\TimespanExtensions.cs" />
+    <Compile Include="Utility\IGuidGenerator.cs" />
+    <Compile Include="Utility\Json\JsonExtensions.cs" />
+    <Compile Include="Utility\Json\JsonSerializationHelper.cs" />
+    <Compile Include="Localization\IText.cs" />
+    <Compile Include="Localization\LocalizedString.cs" />
+    <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Localization\Models\DateParts.cs" />
+    <Compile Include="Localization\Models\DateTimeParts.cs" />
+    <Compile Include="Localization\Models\TimeParts.cs" />
+    <Compile Include="Localization\NullLocalizer.cs" />
+    <Compile Include="Localization\Records\CultureRecord.cs" />
+    <Compile Include="Localization\Services\ILocalizationStreamParser.cs" />
+    <Compile Include="Localization\Services\ILocalizedStringManager.cs" />
+    <Compile Include="Localization\Services\LocalizationStreamParser.cs" />
+    <Compile Include="Localization\Text.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\ILoggerFactory.cs" />
+    <Compile Include="Logging\LoggingModule.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
+    <Compile Include="Logging\NullLoggerFactory.cs" />
+    <Compile Include="Mvc\Extensions\HttpContextBaseExtensions.cs" />
+    <Compile Include="Mvc\HttpContextAccessor.cs" />
+    <Compile Include="Mvc\IHasRequestContext.cs" />
+    <Compile Include="Mvc\IHttpContextAccessor.cs" />
+    <Compile Include="Mvc\MvcBaseModule.cs" />
+    <Compile Include="Exceptions\OrchardCoreException.cs" />
+    <Compile Include="Exceptions\OrchardException.cs" />
+    <Compile Include="Exceptions\OrchardFatalException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Authorizer.cs" />
+    <Compile Include="Security\IAuthenticationService.cs" />
+    <Compile Include="Security\IAuthorizationService.cs" />
+    <Compile Include="Security\IAuthorizationServiceEventHandler.cs" />
+    <Compile Include="Security\IEncryptionService.cs" />
+    <Compile Include="Security\ISslSettingsProvider.cs" />
+    <Compile Include="Security\IUser.cs" />
+    <Compile Include="Security\OrchardSecurityException.cs" />
+    <Compile Include="Security\Permissions\IPermissionProvider.cs" />
+    <Compile Include="Security\Permissions\Permission.cs" />
+    <Compile Include="Security\Providers\DefaultEncryptionService.cs" />
+    <Compile Include="Security\Providers\DefaultSslSettingsProvider.cs" />
+    <Compile Include="Security\Providers\OrchardRoleProvider.cs" />
+    <Compile Include="Security\StandardPermissions.cs" />
+    <Compile Include="Services\Clock.cs" />
+    <Compile Include="Services\DefaultJsonConverter.cs" />
+    <Compile Include="Services\IClock.cs" />
+    <Compile Include="Services\IHtmlFilter.cs" />
+    <Compile Include="Services\IJsonConverter.cs" />
+    <Compile Include="Settings\CurrentSiteWorkContext.cs" />
+    <Compile Include="Settings\ISite.cs" />
+    <Compile Include="Settings\ISiteService.cs" />
+    <Compile Include="Settings\ResourceDebugMode.cs" />
+    <Compile Include="Threading\Tasks\BackgroundService.cs" />
+    <Compile Include="Threading\Tasks\IBackgroundTask.cs" />
+    <Compile Include="Threading\Locking\Records\DistributedLockRecord.cs" />
+    <Compile Include="Threading\Locking\Services\DistributedLock.cs" />
+    <Compile Include="Threading\Locking\Services\DistributedLockService.cs" />
+    <Compile Include="Threading\Locking\Services\IDistributedLock.cs" />
+    <Compile Include="Threading\Locking\Services\IDistributedLockService.cs" />
+    <Compile Include="Threading\Tasks\SweepGenerator.cs" />
+    <Compile Include="UI\Admin\AdminAttribute.cs" />
+    <Compile Include="UI\Admin\Notification\INotificationManager.cs" />
+    <Compile Include="UI\Admin\Notification\INotificationProvider.cs" />
+    <Compile Include="UI\Admin\Notification\NotificationManager.cs" />
+    <Compile Include="UI\FlatPositionComparer.cs" />
+    <Compile Include="UI\Notify\Notifier.cs" />
+    <Compile Include="UI\Notify\NotifierExtensions.cs" />
+    <Compile Include="UI\Notify\NotifyEntry.cs" />
+    <Compile Include="UI\PageClass\IPageClassBuilder.cs" />
+    <Compile Include="UI\PageClass\PageClassBuilder.cs" />
+    <Compile Include="UI\PageTitle\IPageTitleBuilder.cs" />
+    <Compile Include="Utility\DependencyOrderingUtility.cs" />
+    <Compile Include="Utility\Extensions\HttpRequestExtensions.cs" />
+    <Compile Include="Utility\Extensions\ReadOnlyCollectionExtensions.cs" />
+    <Compile Include="Utility\Extensions\RouteValueDictionaryExtensions.cs" />
+    <Compile Include="Utility\Extensions\StringExtensions.cs" />
+    <Compile Include="Utility\Extensions\VirtualPathProviderExtensions.cs" />
+    <Compile Include="Utility\Hash.cs" />
+    <Compile Include="Utility\MaintenanceBase.cs" />
+    <Compile Include="Utility\NamedReaderWriterLock.cs" />
+    <Compile Include="Utility\NullDisposable.cs" />
+    <Compile Include="Utility\RandomData.cs" />
+    <Compile Include="Utility\RandomHelper.cs" />
+    <Compile Include="Utility\Reflect.cs" />
+    <Compile Include="Reflection\GenericReflectionHelper.cs" />
+    <Compile Include="Utility\ReflectOn.cs" />
+    <Compile Include="Utility\RegularGuidGenerator.cs" />
+    <Compile Include="Utility\Run.cs" />
+    <Compile Include="Utility\ScheduledTimer.cs" />
+    <Compile Include="Utility\SequentialGuidGenerator.cs" />
+    <Compile Include="Utility\SystemClock.cs" />
+    <Compile Include="Utility\Extensions\TypeExtensions.cs" />
+    <Compile Include="Utility\TypeHelper.cs" />
+    <Compile Include="Utility\Utils.cs" />
+    <Compile Include="Validation\DefaultValidationException.cs" />
+    <Compile Include="Validation\Argument.cs" />
+    <Compile Include="Validation\PathValidation.cs" />
+    <Compile Include="WorkContext.cs" />
+    <Compile Include="WorkContextExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\AcquireContext.cs" />
+    <Compile Include="Caching\Cache.cs" />
+    <Compile Include="Caching\CacheModule.cs" />
+    <Compile Include="Caching\DefaultCacheHolder.cs" />
+    <Compile Include="Caching\DefaultCacheManager.cs" />
+    <Compile Include="Caching\ICacheHolder.cs" />
+    <Compile Include="Caching\Weak.cs" />
+    <Compile Include="Caching\ICache.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\IVolatileToken.cs" />
+    <Compile Include="Caching\IVolatileProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此项目引用这台计算机上缺少的 NuGet 程序包。使用 NuGet 程序包还原可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\..\packages\SourceLink.Create.CommandLine.2.5.0\build\SourceLink.Create.CommandLine.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\SourceLink.Create.CommandLine.2.5.0\build\SourceLink.Create.CommandLine.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\..\packages\NETStandard.Library.2.0.0\build\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.0\build\NETStandard.Library.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>::del  /S /Q $(ProjectDir)\obj</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="RemoveNetFxForceConflicts" BeforeTargets="BuiltProjectOutputGroupDependencies">
+    <ItemGroup>
+      <ReferencePath Remove="@(ReferencePath)" Condition="'%(FileName)' == 'netfx.force.conflicts'" />
+      <!-- <ReferencePath Remove="@(ReferencePath)" Condition="'%(FileName)' == 'netstandard'" /> -->
+    </ItemGroup>
+  </Target>
+  <Import Project="..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\..\packages\SourceLink.Create.CommandLine.2.5.0\build\SourceLink.Create.CommandLine.targets" Condition="Exists('..\..\packages\SourceLink.Create.CommandLine.2.5.0\build\SourceLink.Create.CommandLine.targets')" />
+</Project>

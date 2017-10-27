@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Concurrent;
+using System.Linq;
+using Orchard.Environment.Configuration;
+using Orchard.Environment.Extensions;
+using Orchard.Logging;
+using Orchard.MessageBus.Services;
+using Orchard.Redis.Configuration;
+using StackExchange.Redis;
+
+namespace Orchard.Redis.MessageBus {
+
+    [OrchardFeature("Orchard.Redis.MessageBus")]
+    public class RedisMessageBusBroker : Component, IMessageBroker {
+
+        private readonly IRedisConnectionProvider _redisConnectionProvider;
+        private readonly ConnectionMultiplexer _connectionMultiplexer;
+        public const string ConnectionStringKey = "Orchard.Redis.MessageBus";
+        private readonly string _connectionString;
+
+        private ConcurrentDictionary<string, ConcurrentBag<Action<string, string>>> _handlers = new ConcurrentDictionary<string, ConcurrentBag<Action<string, string>>>();
+
+        public RedisMessageBusBroker(ShellSettings shellSettings, IRedisConnectionProvider redisConnectionProvider) {
+            _redisConnectionProvider = redisConnectionProvider;
+            _connectionString = _redisConnectionProvider.GetConnectionString(ConnectionStringKey);
+            _connectionMultiplexer = _redisConnectionProvider.GetConnection(_connectionString);
+        }
+
+        public IDatabase Database {
+            get {
+                return _connectionMultiplexer.GetDatabase();
+            }
+        }
+
+        public void Subscribe(string channel, Action<string, string> handler) {
+            if (_connectionMultiplexer == null) {
+                return;
+            }
+
+            try {
+                var channelHandlers = _handlers.GetOrAdd(channel, c => {
+                    return new ConcurrentBag<Action<string, string>>();
+                });
+
+                channelHandlers.Add(handler);
+
+                var sub = _redisConnectionProvider.GetConnection(_connectionString).GetSubscriber();
+                sub.Subscribe(channel, (c, m) => {
+                    
+                    // the message contains the publisher before the first '/'
+                    var messageTokens = m.ToString().Split('/');
+                    var publisher = messageTokens.FirstOrDefault();
+                    var message = messageTokens.Skip(1).FirstOrDefault();
+
+                    if (String.IsNullOrWhiteSpace(publisher)) {
+                        return;
+                    }
+
+                    // ignore self sent messages
+                    if (GetHostName().Equals(publisher, StringComparison.OrdinalIgnoreCase)) {
+                        return;
+                    }
+
+                    Logger.DebugFormat("Processing {0}", message);
+                    handler(c, message);
+                });
+
+            }
+            catch (Exception e) {
+                Logger.Error("An error occurred while subscribing to " + channel,e);
+            }
+        }
+
+        public void Publish(string channel, string message) {
+            if (_connectionMultiplexer == null) {
+                return;
+            }
+
+            Database.Publish(channel, GetHostName() + "/" + message);
+        }
+
+        private string GetHostName() {
+            // use the current host and the process id as two servers could run on the same machine
+            return System.Net.Dns.GetHostName() + ":" + System.Diagnostics.Process.GetCurrentProcess().Id;
+        }
+
+    }
+}

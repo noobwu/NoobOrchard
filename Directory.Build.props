@@ -1,0 +1,36 @@
+<Project>
+  <!-- Set the repository root into a variable -->
+  <PropertyGroup>
+    <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
+  </PropertyGroup>
+  
+  <!-- Common compile parameters -->
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+
+  <!-- Shared Package Versions -->
+  <PropertyGroup>
+    <!-- System packages -->
+    <SystemRuntimeVersion>4.3.0</SystemRuntimeVersion>
+    
+    <SystemCollectionsImmutableVersion>1.4.0</SystemCollectionsImmutableVersion>
+    <SystemNetHttpVersion>4.3.2</SystemNetHttpVersion>
+    <SystemReflectionMetadataVersion>1.5.0</SystemReflectionMetadataVersion>
+    <SystemReflectionTypeExtensionsVersion>4.4.0</SystemReflectionTypeExtensionsVersion>
+    <SystemValueTupleVersion>4.4.0</SystemValueTupleVersion>
+
+    <!-- Microsoft packages -->
+    <MicrosoftBuildVersion>15.3.409</MicrosoftBuildVersion>
+    <MicrosoftCodeAnalysisCSharpVersion>2.0.0</MicrosoftCodeAnalysisCSharpVersion>
+
+
+    <!-- Test related packages -->
+    <BenchmarkDotNetVersion>0.10.9</BenchmarkDotNetVersion>
+    <!-- Tooling related packages -->
+    <SourceLinkVersion>2.5.0</SourceLinkVersion>
+  </PropertyGroup>
+  
+</Project>

@@ -1,0 +1,17 @@
+{
+    "defaultAssembly": "Orchard.Framework.Tests",
+    "components": [
+        {
+            "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ComponentRegistrarFixture+SimpleComponent",
+            "parameters": {
+                "input": 5
+            }
+        },
+        {
+            "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ComponentRegistrarFixture+SimpleComponent",
+            "parameters": {
+                "input": 10
+            }
+        }
+    ]
+}

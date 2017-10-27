@@ -1,0 +1,21 @@
+bin/ obj/[Bb]in
+obj
+[Dd]ebug
+[Rr]elease
+*.user
+*.aps
+*.eto
+ClientBin
+GeneratedArtifacts
+_Pvt_Extensions
+project.lock.json
+*.nuget.props
+*.nuget.targets
+.*.swp 
+.DS_Store  
+.vs 
+bin
+obj
+*.log
+*Noob.Web.Admin.EasyUI*Logs
+packages

@@ -1,0 +1,72 @@
+scenario
+{
+    name    = "Noob Dashboard";
+
+    warmup      = 10;
+    duration    = 30;
+    cooldown    = 1;
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // All requests inherit the settings from the default request.
+    // Defaults are overridden if specified in the request itself.
+    //
+    /////////////////////////////////////////////////////////////////
+    default
+    {
+        // send keep-alive header
+        setheader
+        {
+            name    = "Connection";
+            value   = "keep-alive";
+        }
+
+        // set the host header
+        setheader
+        {
+            name    = "Host";
+            value   = server();
+        }
+
+        // HTTP1.1 request
+        version     = HTTP11;
+
+        // keep the connection alive after the request
+        close       = ka;
+    }
+
+    //
+    // This script is made for IIS7
+    //
+    transaction
+    {
+        id = "Login and view home";
+        weight = 1;
+
+        request
+        {
+		    port = 10066;
+            url         = "/Account/Login";
+            verb		= POST;
+            postdata	= "username=admin&password=admin@123456";
+            redirect	= true;
+            redirverb	= GET;
+            statuscode  = 200;
+        }
+
+        request
+        {
+	    	port = 10066;
+            url         = "/";
+            statuscode  = 302;
+        }
+
+        //
+        // specifically close the connection after both files are requested
+        //
+        close
+        {
+            method      = reset;
+        }
+    }
+}

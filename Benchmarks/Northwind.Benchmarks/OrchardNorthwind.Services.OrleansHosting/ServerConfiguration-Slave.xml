@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OrleansConfiguration xmlns="urn:orleans">
+  <Globals>
+    <!--Store配置 Start-->
+
+    <!--MembershipTableGrain配置 Start-->
+    <!--<SystemStore SystemStoreType="MembershipTableGrain" />
+    <Liveness LivenessEnabled="true" LivenessType ="MembershipTableGrain" />-->
+    <!--MembershipTableGrain配置 End-->
+
+    <!--SqlServer配置-->
+    <SystemStore SystemStoreType ="SqlServer"
+            DeploymentId="OrchardNorthwindServicesOrleans"
+            DataConnectionString="Data Source=.;Initial Catalog=OrleansDemo;User ID=sa;Password=123456;Pooling=true;Max Pool Size=200;"
+                  AdoInvariant="System.Data.SqlClient" />
+    <!--<Liveness LivenessEnabled="true" LivenessType="SqlServer" />-->
+
+    <!--Custom配置 Start-->
+
+    <!--Consul配置-->
+    <!--<SystemStore SystemStoreType="Custom" DataConnectionString="http://localhost:8500"
+                 DeploymentId="OrchardNorthwindServicesOrleans"  MembershipTableAssembly="OrleansConsulUtils" />-->
+    <!--<Liveness LivenessEnabled="true" LivenessType ="Custom" />-->
+
+    <!--ZooKeeper配置-->
+    <!--<SystemStore SystemStoreType="Custom" DataConnectionString="127.0.0.1:2181"
+                 DeploymentId="OrchardNorthwindServicesOrleans"  MembershipTableAssembly="OrleansZooKeeperUtils" />-->
+    <!--
+    <Liveness LivenessEnabled="true" LivenessType ="Custom" />-->
+
+    <!--Custom配置 End-->
+
+    <StorageProviders>
+      <!--<Provider Type="Orleans.Storage.MemoryStorage" Name="MemoryStorage"  />-->
+      <Provider Type="Orleans.Storage.AdoNetStorageProvider"
+            Name="SqlServerStorage"
+            AdoInvariant="System.Data.SqlClient"
+            DataConnectionString="Server=.;Database=OrleansDemo;User ID=sa;Password=123456;Pooling=true;Max Pool Size=32767;Min Pool Size=0;Asynchronous Processing=True;MultipleActiveResultSets=True;"/>
+    </StorageProviders>
+    <!--Store配置 End-->
+
+    <!--  <StatisticsProviders>
+      <Provider Type="Orleans.Providers.SqlServer.SqlStatisticsPublisher" Name="SQLServerStatsProvider"
+                ConnectionString="Data Source=.;Initial Catalog=OrleansDemo;User ID=sa;Password=123456;Pooling=true;Max Pool Size=200;Asynchronous Processing=True;MultipleActiveResultSets=True;" />
+    </StatisticsProviders> -->
+    <SeedNode Address="localhost" Port="22000" />
+    <SeedNode Address="localhost" Port="22001" />
+    <SeedNode Address="localhost" Port="22002" />
+    <SeedNode Address="localhost" Port="22003" />
+    <SeedNode Address="localhost" Port="22004" />
+    <Messaging>
+      <SerializationProviders>
+        <Provider type="NoobOrleans.Core.JsonSerializer,NoobOrleans.Core"/>
+        <!--<Provider type="OrleansLinqUtils.LinqSerializer,OrleansLinqUtils"/>-->
+        <!--<Provider type="Orleans.Serialization.ILBasedSerializer,Orleans"/>-->
+        <!--<Provider type="Orleans.Serialization.BinaryFormatterSerializer,Orleans"/>-->
+      </SerializationProviders>
+      <!--<FallbackSerializationProvider type="OrleansLinqUtils.LinqSerializer,OrleansLinqUtils" />-->
+      <!--<FallbackSerializationProvider type="Orleans.Serialization.ILBasedSerializer,Orleans" />-->
+      <!--<FallbackSerializationProvider type="Orleans.Serialization.BinaryFormatterSerializer,Orleans"/>-->
+    </Messaging>
+    <BootstrapProviders>
+      <Provider Type="OrleansDashboard.Dashboard" Name="Dashboard" Port="38080" />
+    </BootstrapProviders>
+  </Globals>
+  <Defaults>
+    <Startup Type="OrchardNorthwind.Orleans.DependencyInjection.NorthwindBootstrap,OrchardNorthwind.Orleans.DependencyInjection" />
+    <Networking Address="localhost" Port="22000" />
+    <ProxyingGateway Address="localhost" Port="40100" />
+    <Tracing DefaultTraceLevel="Info" TraceToConsole="true" TraceToFile="Logs\{0}-{1}.log" WriteMessagingTraces="true" BulkMessageLimit="1000">
+      <TraceLevelOverride LogPrefix="Application" TraceLevel="Info" />
+      <TraceLevelOverride LogPrefix="Runtime" TraceLevel="Info" />
+      <TraceLevelOverride LogPrefix="Tetris" TraceLevel="Info" />
+      <TraceLevelOverride LogPrefix="AssemblyLoader" TraceLevel="Warning" />
+    </Tracing>
+    <!--<Statistics ProviderType="SQLServerStatsProvider" MetricsTableWriteInterval="10s" PerfCounterWriteInterval="300s" 
+                LogWriteInterval="300s" WriteLogStatisticsToTable="true"/> -->
+    <Statistics  MetricsTableWriteInterval="10s" PerfCounterWriteInterval="300s"
+                  LogWriteInterval="300s" WriteLogStatisticsToTable="true"/>
+  </Defaults>
+  <Override Node="Primary">
+    <Networking Address="localhost" Port="22000" />
+    <ProxyingGateway Address="localhost" Port="40100" />
+  </Override>
+  <Override Node="Secondary">
+    <Networking Port="22001" />
+    <ProxyingGateway Address="localhost" Port="40101" />
+  </Override>
+  <Override Node="Node2">
+    <Networking Port="22002" />
+  </Override>
+  <Override Node="Node3">
+    <Networking Port="22003" />
+  </Override>
+</OrleansConfiguration>

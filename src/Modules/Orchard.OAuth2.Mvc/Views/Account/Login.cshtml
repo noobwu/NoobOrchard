@@ -1,0 +1,77 @@
+﻿﻿@using System
+@using System.Linq
+@using System.Security.Claims
+@using System.Web
+@using Microsoft.Owin.Security
+@{
+    var authentication = Context.GetOwinContext().Authentication;
+}
+@using Orchard.OAuth2.Mvc.Models
+@model LoginViewModel
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Authorization Server</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <h4>使用本地帐户登录。</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Value = "test@test.com" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @Value = "test" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="登录" class="btn btn-default" />
+                        </div>
+                    </div>
+                    <p>
+                        @Html.ActionLink("注册为新用户", "Register")
+                    </p>
+                    @* 在为密码重置功能启用帐户确认后启用此项
+                        <p>
+                            @Html.ActionLink("忘记了密码?", "ForgotPassword")
+                        </p>*@
+                }
+            </section>
+        </div>
+    </div>
+    <form method="POST" action="/Account/External?@Request.QueryString">
+        <h2>Third Party Login</h2>
+        <ul>
+            @foreach (var description in authentication.GetAuthenticationTypes().Where(d => !String.IsNullOrEmpty(d.Caption)))
+            {
+                <li>
+                    <input type="submit" name="submit.External.@description.AuthenticationType" value="@description.Caption" />
+                </li>
+            }
+        </ul>
+    </form>
+</body>
+</html>

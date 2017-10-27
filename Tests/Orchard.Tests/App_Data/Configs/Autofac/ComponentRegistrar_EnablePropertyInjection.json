@@ -1,0 +1,9 @@
+﻿{
+    "defaultAssembly": "Orchard.Framework.Tests",
+    "components": [
+        {
+            "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ComponentRegistrarFixture+ComponentConsumer",
+            "injectProperties": true
+        }
+    ]
+}

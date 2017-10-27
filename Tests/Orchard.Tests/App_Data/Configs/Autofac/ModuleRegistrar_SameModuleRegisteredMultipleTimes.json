@@ -1,0 +1,17 @@
+{
+    "defaultAssembly": "Orchard.Framework.Tests",
+    "modules": [
+        {
+            "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ModuleRegistrarFixture+ParameterizedModule",
+            "parameters": {
+                "message": "First"
+            }
+        },
+        {
+            "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ModuleRegistrarFixture+ParameterizedModule",
+            "parameters": {
+                "message": "Second"
+            }
+        }
+    ]
+}

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Authorization Code Grant Client</title>
+</head>
+<body>
+    <h1>Authorization Code Grant Client</h1>
+    <h2>Client Application</h2>
+    <div class="row">
+        <div>
+            <section id="form1">
+                <form id="form1" action="@ViewBag.Action" method="POST" class="form-horizontal"  role = "form" >
+                    <div>
+                        <h4> Access Token。</h4>
+                        <hr />
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="AccessToken">AccessToken</label>
+                            <div>
+                                <input  class="form-control" data-val="true" 
+                                       id="AccessToken" name="AccessToken" type="text" value="@ViewBag.AccessToken" style="max-width:604px;" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" name="submit.Authorize" id="Authorize" value="Authorize" class="btn btn-default" />
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <h4> Refresh Tokensh Token。</h4>
+                        <hr />
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="RefreshToken">RefreshToken</label>
+                            <div>
+                                <input class="form-control" data-val="true"
+                                       id="RefreshToken" name="RefreshToken" type="text" value="@ViewBag.RefreshToken" style="max-width:604px;" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" name="submit.Refresh" id="Refresh" value="Refresh" class="btn btn-default" />
+                            </div>
+                        </div>
+                        <br />
+                        <hr />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" id="CallApi" name="submit.CallApi" value="Access Protected Resource API" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @ViewBag.ApiResponse
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

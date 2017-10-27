@@ -1,0 +1,53 @@
+﻿{
+  "defaultAssembly": "Orchard.Framework.Tests",
+  "components": [
+    {
+      "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ConfigurationExtensionsFixture+HasDictionaryProperty",
+      "properties": {
+        "populated": {
+          "a": 1,
+          "b": 2
+        },
+        "empty": {},
+        "convertible": {
+          "a": 1,
+          "b": 2
+        }
+      }
+    },
+    {
+      "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ConfigurationExtensionsFixture+HasEnumerableParameter",
+      "parameters": {
+        "list": [ "a", "b" ]
+      }
+    },
+    {
+      "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ConfigurationExtensionsFixture+HasEnumerableProperty",
+      "properties": {
+        "populated": [ 1, 2 ],
+        "empty": [],
+        "convertible": [ 1, 2 ]
+      }
+    },
+    {
+      "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ConfigurationExtensionsFixture+HasSimpleParametersAndProperties",
+      "parameters": {
+        "number": 1,
+        "ip": "127.0.0.1"
+      },
+      "properties": {
+        "text": "text",
+        "url": "http://localhost"
+      }
+    },
+    {
+      "type": "Orchard.Tests.Environment.AutofacUtil.Configuration.Core.ConfigurationExtensionsFixture+HasConvertibleParametersAndProperties",
+      "parameters": {
+        "parameter": 1
+      },
+      "properties": {
+        "Property": 2
+      }
+    }
+  ]
+}
