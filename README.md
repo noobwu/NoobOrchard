@@ -1,5 +1,7 @@
 # NoobOrchard Repositories测试数据
-
+数据库为Sql Server 2014 
+数据表记录数:1103231
+数据表空间:1279.438
 ``` ini
 
 BenchmarkDotNet=v0.10.9, OS=Windows 10 Redstone 2 (10.0.15063)
