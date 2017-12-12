@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互联网站内容管理系统</title>
+    @Styles.Render("~/style/easyui")
+    @Styles.Render("~/style/admin")
+    @Scripts.Render("~/script/easyui")
+    <script type="text/javascript">
+        var rootUrl = "@ViewBag.RootUrl";
+        var uploadUrl = "@ViewBag.UploadUrl"
+    </script>
+</head>
+<body id="layout_body" class="easyui-layout" style="margin:5px;">
+    @RenderBody()
+    @Scripts.Render("~/script/admin")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

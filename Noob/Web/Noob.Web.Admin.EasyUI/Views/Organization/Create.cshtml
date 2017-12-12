@@ -1,0 +1,94 @@
+﻿@{
+    Layout = null;
+}
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%">
+                <tr>
+                    <td align="right">名称：</td>
+                    <td><input type="text" name="OrgName" class="easyui-textbox" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">是否有效：</td>
+                    <td>
+                    @*<select name="IsActive">*@
+                        <select name="StatusFlag" id="sltStatusFlag" style="width:126px;" class="easyui-combobox" editable="false" data-options='panelHeight:70'>
+                            <option value="1">有效</option>
+                            <option value="0">无效</option>
+                        </select><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">排序：</td>
+                    <td><input type="text" name="SortOrder" value="0" class="easyui-textbox" /></td>
+                </tr>
+                <tr>
+                    <td align="right">办公室地址：</td>
+                    <td><input type="text" name="Address"  class="easyui-textbox" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">办公室电话：</td>
+                    <td><input type="text" name="OfficePhone"  class="easyui-textbox" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">负责人：</td>
+                    <td><input type="text" name="TeamLeader" class="easyui-textbox" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+            </table>
+            <input type="hidden" name="ParentId" value="@ViewBag.pid" id="hidPid" />
+        </form>
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right; margin-bottom:15px; margin-right:5px;">
+        <a class="easyui-linkbutton" id="btn_saveItem" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="saveData()" style="width:80px;height:24px; line-height:24px;">保存</a>
+    </div>
+</div>
+<script type="text/javascript">
+    function saveData() {
+        var flag = $("#add_data input[type=text]").textbox("isValid");
+        if (!flag)
+        {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        var data = $("#add_data").serialize();
+
+        //显示遮罩,by michael in 2014/7/9
+        loading({ btn: 'btn_saveItem' });
+
+        $.ajax({
+            type: "POST",
+            url: rootUrl+"Organization/Create",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            reloadData($('#hidPid').val());
+                            closeDialog();
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+               // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+
+        });
+    }
+</script>
+

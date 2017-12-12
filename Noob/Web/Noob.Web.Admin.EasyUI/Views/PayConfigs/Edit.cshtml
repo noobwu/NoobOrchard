@@ -1,0 +1,474 @@
+﻿@{
+    ViewBag.Title = "编辑支付配置";
+}
+@model Noob.Web.Admin.Models.AdmPayConfigsModel
+@using Orchard.Utility.Json
+<style type="text/css">
+    .tdTitle {
+        width: 180px;
+    }
+
+    .form-group {
+        height: 32px;
+        line-height: 32px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
+    .pay-label {
+        margin-left: 15px;
+        float: left;
+        width: 135px;
+        height: 24px;
+        line-height: 24px;
+    }
+
+    .pay-form {
+        float: left;
+        margin-left: 5px;
+        height: 24px;
+        line-height: 24px;
+    }
+</style>
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-header table-body" style="overflow:hidden">
+                <tr>
+                    <td align="right" class="tdTitle">第三方支付类型：</td>
+                    <td>
+                        <select id="sltOnlinePayType" style="width:126px;" class="easyui-combobox easyui-validatebox" editable="false" data-options='panelHeight:100,required:true'>
+                            <option value="Alipay">支付宝支付</option>
+                            <option value="WeixinPay">微信支付</option>
+                            <option value="OtherPay" selected="selected">其它在线支付</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">支付方式名称：</td>
+                    <td>
+                        <input type="text" id="txtPayName" value="@Model.PayName" class="easyui-textbox easyui-validatebox" data-options='required:true,validType: "length[0,50]"' name="PayName" style="width:300px;" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">支付编号：</td>
+                    <td>
+                        <input type="text" id="txtPayCode" value="@Model.PayCode" class="easyui-textbox easyui-validatebox" data-options='required:true,validType: "length[0,100]"' name="PayCode" style="width:300px;" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">支付配置信息：</td>
+                    <td>
+                        <div id="divOtherPay">
+                            <input type="text" name="PayConfig" id="txtPayConfig" class="easyui-textbox" data-options='required:true,multiline:true,validType: "length[0,2000]"' style="height:80px;width:300px" />
+                            <span style="color:Red;margin-left:5px">*</span>
+                        </div>
+                        <!--支付宝支付配置开始-->
+                        <div id="divAlipay" style="display:none;">
+                            <div class="form-group">
+                                <label class="pay-label">支付宝API地址：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_ApiUrl" value="https://mapi.alipay.com/gateway.do?" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">防钓鱼功能开关：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_AntiPhishing" value="0" class="easyui-textbox" data-options='required:true' style="width:50px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="pay-label">字符编码：</label>
+                                <div class="pay-form">
+                                    <select id="Alipay_InputCharset" style="width:126px;" class="easyui-combobox" editable="false" data-options='panelHeight:50,required:true'>
+                                        <option value="utf-8" selected="selected">utf-8</option>
+                                        <option value="gbk">gbk</option>
+                                    </select>
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">合作者身份(parterID)：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_Partner" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">收款支付宝账号：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_SellerId" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">卖家支付宝帐户：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_SellerEmail" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">是否是测试环境：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_PayTest" value="2C8C8EA90E428B40A8BE5AB9DED6C460" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">商户的私钥(MD5)：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_Key" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group" style="height:80px; line-height:80px;">
+                                <label class="pay-label" style="height:70px; line-height:70px;">支付宝的公钥：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_AlipayPublicKey" class="easyui-textbox" data-options='required:true,multiline:true' style="height:80px;width:300px" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group" style="height:80px; line-height:80px;">
+                                <label class="pay-label" style="height:70px; line-height:70px;">商户的私钥：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_PrivateKey" class="easyui-textbox" data-options='required:true,multiline:true' style="height:80px;width:300px" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">异步通知页面：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_NotifyUrl" value="Pages/Alipay/NotifyUrl.aspx" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">同步通知页面：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="Alipay_ReturnUrl" value="Pages/Alipay/NotifyUrl.aspx" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                        </div>
+                        <!--支付宝支付配置结束-->
+                        <!--微信支付配置开始-->
+                        <div id="divWeixinPay" style="display:none;">
+                            <div class="form-group">
+                                <label class="pay-label">AppId：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_AppId" value="" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">商户号：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_MchId" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">商户支付密钥：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_Key" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">公众帐号Secert：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_AppSecret" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">证书路径：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_SSLCertPath" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">证书对应密码：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_SSLCertPassword" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">异步通知页面：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_NotifyUrl" value="Pages/WeixinPay/NotifyUrl.aspx" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">代理服务器设置：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_ProxyUrl" value="http://10.152.18.220:8080" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">是否是测试环境：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="WeixinPay_PayTest" value="EF016EB86CFFEC2BAC54557E3EE7FE0D" class="easyui-textbox" data-options='required:true' style="width:300px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">上报信息配置：</label>
+                                <div class="pay-form">
+                                    <select id="WeixinPay_ReportLevel" style="width:126px;" class="easyui-combobox" editable="false" data-options='panelHeight:50,required:true'>
+                                        <option value="0" selected="selected">关闭上报</option>
+                                        <option value="1">仅错误时上报</option>
+                                        <option value="2">全量上报</option>
+                                    </select>
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                        </div>
+                        <!--微信支付配置结束-->
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">支付类型：</td>
+                    <td>
+                        <select name="PayType" id="sltPayType" style="width:126px;" class="easyui-combobox easyui-validatebox" editable="false" data-options='panelHeight:150,required:true'>
+                            <option value="1" selected="selected">在线支付</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">支付帮助说明（提示用户）：</td>
+                    <td>
+                        <input type="text" id="txtNote" value="@Model.Note" class="easyui-textbox easyui-validatebox" data-options='required:true,multiline:true,validType: "length[0,600]"' name="Note" style="height:80px;width:300px" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">支付方式状态：</td>
+                    <td>
+                        <select name="Status" id="sltStatus" style="width:126px;" class="easyui-combobox easyui-validatebox" editable="false" data-options='panelHeight:150,required:true'>
+                            <option value="0">开发中</option>
+                            <option value="1">开启</option>
+                            <option value="2">关闭</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">排序：</td>
+                    <td>
+                        <input type="text" id="txtSortOrder" value="@Model.SortOrder" class="easyui-textbox easyui-validatebox" data-options='required:true,validType: "number"' name="SortOrder" style="width:80px;" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">描述：</td>
+                    <td>
+                        <input type="text" id="txtRemark" value="@Model.Remark" class="easyui-textbox easyui-validatebox" data-options='required:true,multiline:true,validType: "length[0,300]"' name="Remark" style="height:80px;width:300px" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" value="@Model.PayConfigID" name="PayConfigID" />
+        </form>
+
+    </div>
+    <div data-options="region:'north',border:false" class="divNorthDetail">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btn_saveItem" href="javascript:void(0)" onclick="saveData()" style="width:80px">保存</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" id="btn_saveItem" href="javascript:void(0)" onclick="closeWin()" style="width:80px">取消</a>
+    </div>
+</div>
+<script type="text/javascript">
+    initValue();
+    //初始化值
+    $(function () {
+        //checkIsEdit();
+        init();
+    });
+    function initValue() {
+        $("#sltPayType").val(@Model.PayType);
+        $("#sltStatus").val(@Model.Status);
+        var payCode = '@Model.PayCode.ToUpper()';
+        try {
+            @if (Model.PayConfig.ValidateJson())
+            {
+                <text>var payConfig = eval(@Html.Raw(Model.PayConfig)); </text>
+            }
+            else
+            {
+               <text>var payConfig=null; </text>
+            }
+
+            switch (payCode) {
+                case "ALIPAY":
+                    {
+                        $('#sltOnlinePayType').val("Alipay");
+                        $("#sltPayType").val(@Model.PayType);
+                        $("#divAlipay").css("display", "");
+                        $("#divWeixinPay").css("display", "none");
+                        $("#divOtherPay").css("display", "none");
+                        if (payConfig != undefined && payConfig != null) {
+                            $("#Alipay_ApiUrl").val(payConfig.ApiUrl);
+                            $("#Alipay_AntiPhishing").val(payConfig.AntiPhishing);
+                            $("#Alipay_AlipayPublicKey").val(payConfig.AlipayPublicKey);
+                            $('#Alipay_InputCharset').val(payConfig.InputCharset);
+                            $("#Alipay_Key").val(payConfig.Key);
+                            $("#Alipay_NotifyUrl").val(payConfig.NotifyUrl);
+                            $("#Alipay_Partner").val(payConfig.Partner);
+                            $("#Alipay_PayTest").val(payConfig.PayTest);
+                            $("#Alipay_PrivateKey").val(payConfig.PrivateKey);
+                            $("#Alipay_ReturnUrl").val(payConfig.ReturnUrl);
+                            $("#Alipay_SellerId").val(payConfig.SellerId);
+                            $("#Alipay_SellerEmail").val(payConfig.SellerEmail);
+                        }
+                    }
+                    break;
+                case "WEIXINPAY":
+                    {
+                        $('#sltOnlinePayType').val("WeixinPay");
+                        $("#divAlipay").css("display", "none");
+                        $("#divWeixinPay").css("display", "");
+                        $("#divOtherPay").css("display", "none");
+                        if (payConfig != undefined && payConfig != null) {
+                            $("#WeixinPay_AppId").val(payConfig.AppId);
+                            $("#WeixinPay_MchId").val(payConfig.MchId);
+                            $("#WeixinPay_Key").val(payConfig.Key);
+                            $("#WeixinPay_AppSecret").val(payConfig.AppSecret);
+                            $("#WeixinPay_SSLCertPath").val(payConfig.SSLCertPath);
+                            $("#WeixinPay_SSLCertPassword").val(payConfig.SSLCertPassword);
+                            $("#WeixinPay_NotifyUrl").val(payConfig.NotifyUrl);
+                            $("#WeixinPay_ProxyUrl").val(payConfig.ProxyUrl);
+                            $("#WeixinPay_ReportLevel").val(payConfig.ReportLevel);
+                            $("#WeixinPay_PayTest").val(payConfig.PayTest);
+                        }
+                    }
+                    break;
+                default:
+                    {
+                        $('#sltOnlinePayType').val("OtherPay");
+                        $("#divAlipay").css("display", "none");
+                        $("#divWeixinPay").css("display", "none");
+                        $("#divOtherPay").css("display", "");
+                        $("#txtPayConfig").val('@Model.PayConfig');
+                    }
+                    break;
+
+            }
+        } catch (e) {
+            //console.log(e.message);
+            //$("#divAlipay").css("display", "none");
+            //$("#divWeixinPay").css("display", "none");
+            //$("#divOtherPay").css("display", "");
+        }
+
+    }
+    function closeWin() {
+        parent.closedTabs("修改支付配置");
+    }
+    function init() {
+        $('#sltOnlinePayType').combobox({
+            onSelect: function (record) {
+                var onlinePayType = $('#sltOnlinePayType').combobox('getValue');
+                switch (onlinePayType) {
+                    case "Alipay":
+                        $("#divAlipay").css("display", "");
+                        $("#divWeixinPay").css("display", "none");
+                        $("#divOtherPay").css("display", "none");
+                        break;
+                    case "WeixinPay":
+                        $("#divAlipay").css("display", "none");
+                        $("#divWeixinPay").css("display", "");
+                        $("#divOtherPay").css("display", "none");
+                        break;
+                    default:
+                        $("#divAlipay").css("display", "none");
+                        $("#divWeixinPay").css("display", "none");
+                        $("#divOtherPay").css("display", "");
+                        break;
+                }
+            }
+        });
+    }
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-validatebox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).validatebox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+    function getPayConfigValue() {
+        var onlinePayType = $('#sltOnlinePayType').combobox('getValue');
+        var tmpValue = '{}';
+        switch (onlinePayType) {
+            case "Alipay":
+                tmpValue = '{"ApiUrl":"' + $("#Alipay_ApiUrl").val() + '","AntiPhishing":"' + $("#Alipay_AntiPhishing").val() + '","AlipayPublicKey":"' + $("#Alipay_AlipayPublicKey").val() + '","InputCharset":"' + $('#Alipay_InputCharset').combobox('getValue') + '","Key":"' + $("#Alipay_Key").val() + '","NotifyUrl":"' + $("#Alipay_NotifyUrl").val() + '","Partner":"' + $("#Alipay_Partner").val() + '","PayTest":"' + $("#Alipay_PayTest").val() + '","PrivateKey":"' + $("#Alipay_PrivateKey").val() + '","ReturnUrl":"' + $("#Alipay_ReturnUrl").val() + '","SellerId":"' + $("#Alipay_SellerId").val() + '","SellerEmail":"' + $("#Alipay_SellerEmail").val() + '"}';
+                break;
+            case "WeixinPay":
+                tmpValue = '{ "AppId":"' + $("#WeixinPay_AppId").val() + '","MchId":"' + $("#WeixinPay_MchId").val() + '","Key":"' + $("#WeixinPay_Key").val() + '","AppSecret":"' + $("#WeixinPay_AppSecret").val() + '","SSLCertPath":"' + $("#WeixinPay_SSLCertPath").val() + '", "SSLCertPassword":"' + $("#WeixinPay_SSLCertPassword").val() + '", "NotifyUrl":"' + $("#WeixinPay_NotifyUrl").val() + '", "ProxyUrl":"' + $("#WeixinPay_ProxyUrl").val() + '", "ReportLevel":"' + $('#WeixinPay_ReportLevel').combobox('getValue') + '","PayTest":"' + $("#WeixinPay_PayTest").val() + '"}';
+                break;
+            default:
+                tmpValue = '{}';
+                break;
+
+        }
+        //console.log(tmpValue);
+        //$("#txtPayConfig").textbox('setValue', tmpValue)//赋值
+        $("[name='PayConfig']").val(tmpValue)
+    }
+    function saveData() {
+        getPayConfigValue();
+        var flag = formIsValid();
+        if (!flag) {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        var data = $("#add_data").serialize();
+        $.ajax({
+            type: "POST",
+            url: rootUrl + "PayConfigs/Edit",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            parent.openTab("支付配置", rootUrl + "PayConfigs/Index");
+                            parent.closedTabs("添加支付配置");
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>

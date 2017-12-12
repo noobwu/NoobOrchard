@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "菜单列表";
+}
+<style type="text/css">
+    .tree-folder {
+        width: 0px;
+    }
+
+    .tree-file {
+        width: 0px;
+    }
+</style>
+<div data-options="region:'center',border:false" class="divCenter">
+    <table id="tg"></table>
+    <div id="mm" class="easyui-menu" style="width:120px;">
+        <div onclick="createModuleRoot()" data-options="iconCls:'icon-add'" style="display:@ViewBag.Create">添加根菜单</div>
+        <div onclick="createModuleChild()" data-options="iconCls:'icon-add'" style="display:@ViewBag.Create">添加子菜单</div>
+        <div class="menu-sep"></div>
+        <div onclick="updateModule()" data-options="iconCls:'icon-edit'" style="display:@ViewBag.Edit">编辑菜单</div>
+        <div onclick="deleteModule()" data-options="iconCls:'icon-cut'" style="display:@ViewBag.Delete">删除菜单</div>
+        <div class="menu-sep"></div>
+        <div onclick="reloadData()" data-options="iconCls:'icon-reload'">刷新</div>
+    </div>
+    <div id="tbar" style="text-align:right">
+        <a href="javascript:void(0)" onclick="createModule()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="display:@ViewBag.Create">添加</a>
+        <a href="javascript:void(0)" onclick="updateModule()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="display:@ViewBag.Edit">编辑</a>
+        <a href="javascript:void(0)" onclick="deleteModule()" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="display:@ViewBag.Delete">删除</a>
+    </div>
+</div>
+
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/Admin/Menu.js")"></script>

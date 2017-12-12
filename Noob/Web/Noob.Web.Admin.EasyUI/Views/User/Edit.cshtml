@@ -1,0 +1,169 @@
+﻿@model Noob.Web.Admin.Models.AdmUserModel
+@{
+    Layout = null;
+    ViewBag.Title = "编辑用户信息";
+}
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+                <table width="100%">
+                    <tr>
+                        <td align="right">用户账号：</td>
+                        <td><input type="text" name="UserName" value="@(Model.UserName)" class="easyui-textbox  easyui-validatebox" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right">真实姓名：</td>
+                        <td><input type="text" value="@Model.TrueName" name="TrueName" class="easyui-textbox easyui-validatebox" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right">邮箱地址：</td>
+                        <td>
+                            <input type="text" name="Email" value="@Model.Email" class="easyui-textbox easyui-validatebox" data-options="validType:'email',required:true" /><span style="color:Red">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">手机号码：</td>
+                        <td><input type="text" name="Mobile" value="@Model.Mobile.Trim()" class="easyui-textbox easyui-validatebox" data-options="validType:'mobile',required:true" /><span style="color:Red">*</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right">办公电话：</td>
+                        <td><input type="text" name="Phone" value="@Model.Phone" class="easyui-textbox easyui-validatebox" data-options="validType:'phone',required:true" /><span style="color:Red">*</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right">账号状态：</td>
+                        <td>
+                            <select name="Status" id="sltStatus" style="width:126px;" class="easyui-combobox " editable="false" data-options='panelHeight:50'>
+                                <option value="1">启用</option>
+                                <option value="1">禁用</option>
+                            </select><span style="color:Red;margin-left:5px">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">所属组织机构：</td>
+                        <td>
+                            <input type="text" id="txtOrgID" style="width:122px;" class="easyui-combobox" editable="false" data-options='panelHeight:100,required:true' name="OrgID" />
+                            <span style="color:Red">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">所属用户组：</td>
+                        <td>
+                            <input type="text" id="txtGroupId" name="GroupId" class="easyui-combobox" editable="false" data-options='panelHeight:100,required:true,multiple:true' />
+                            <span style="color:Red">*</span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">用户组说明：</td>
+                        <td>
+                            <input type="text" style="height:80px;width:180px" name="Description" class="easyui-textbox easyui-validatebox" data-options="multiline:true,required:true" value="@Model.Description"/>
+                            <span style="color:Red;margin-left:5px">*</span>
+                        </td>
+                    </tr>
+                </table>
+            <input type="hidden" name="UserID" value="@Model.UserID" />
+            <input type="hidden" name="DefaultUserId" value="@ViewBag.DefaultUserId" id="hidDefaultUserId" />
+        </form>
+        
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right; height:33px; padding:3px 10px 0;">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btn_saveItem" href="javascript:void(0)" onclick="saveUserData()" style="width:80px">保存</a>
+    </div>
+</div>
+<script type="text/javascript">
+
+    //绑定部门
+    $(function () {
+        //checkIsEdit();
+        $('#sltStatus').val("@Model.Status");//经过测试,可以的
+        var deptValue = "@Model.OrgID";
+        $("#txtOrgID").combotree({
+            url: rootUrl+"Organization/GetSubList?t=" + Math.random(),
+            method: "get",
+            required: false,
+            panelHeight: 100,
+            value: deptValue,
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#txtOrgID').combotree('clear');
+                    return false;
+                }
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#txtOrgID').combo('showPanel');
+                    $(this).tree("expand", node.target);
+                }
+
+            }
+        });
+        var groupId = "@Model.GroupId";
+        $("#txtGroupId").combotree({
+            url: rootUrl+"Group/GetTreeList?t=" + Math.random(),
+            method: "get",
+            required: true,
+            multiple: true,
+            panelHeight: 100,
+            value: groupId
+        });
+    });
+
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为 的所有对象
+        var validHtml = $("#add_data input.easyui-validatebox ");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).validatebox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+    function saveUserData() {
+        var flag = $("#txtOrgID").combobox("isValid") && formIsValid();
+        if (!flag) {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+
+        $("#hidOrgID").val($("#txtOrgID").combobox("getValue"));
+        var data = $("#add_data").serialize();
+        $.ajax({
+            type: "POST",
+            url: rootUrl+"User/Edit",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            reloadData();
+                            closeDialog();
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>
+
+

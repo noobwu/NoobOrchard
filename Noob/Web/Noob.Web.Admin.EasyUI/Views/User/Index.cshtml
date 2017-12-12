@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<style type="text/css">
+    .tdTitle { padding-left:10px;
+    }
+</style>
+<div data-options="region:'north',border:true,iconCls:'icon-search'" title="查询" class="divNorth">
+    <table>
+        <tr>
+            <td>账户：</td>
+            <td><input type="text" id="txtSearchUserName" name="SearchUserName" class="easyui-textbox" /></td>
+            <td class="tdTitle">姓名：</td>
+            <td><input type="text" id="txtSearchTrueName" name="SearchTrueName" class="easyui-textbox" /></td>
+            <td class="tdTitle">所属组织机构：</td>
+            <td class="tdTitle"><input type="text" id="txtSearchOrgID" class="easyui-combobox" editable="false" data-options='panelHeight:100' name="SearchChannelID" /></td>
+            <td class="tdTitle">账号状态：</td>
+            <td>
+                <select name="SearchStatus" id="sltSearchStatus" style="width:126px;" class="easyui-combobox " editable="false" data-options='panelHeight:50'>
+                    <option value="">请选择</option>
+                    <option value="1">启用</option>
+                    <option value="0">禁用</option>
+                </select>
+            </td>
+            <td class="tdTitle"><a href="#" id="btn_search" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px" onclick="searchData()">查 询</a></td>
+        </tr>
+    </table>
+</div>
+
+<div data-options="region:'center',border:false" class="divCenter">
+    <table id="dg"></table>
+    <div id="tbar" style="text-align:right">
+        <a href="javascript:void(0)" onclick="openDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin-right:15px;display:@ViewBag.Create">新增</a>
+        <a href="javascript:void(0)" onclick="deleteData()" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin-right:15px;display:@ViewBag.Delete">删除</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var isEdit = "1";
+    var isAuthorization = "1";
+    var isChangePass = "1";
+</script>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/Admin/User.js")"></script>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/clear.js")"></script>
+

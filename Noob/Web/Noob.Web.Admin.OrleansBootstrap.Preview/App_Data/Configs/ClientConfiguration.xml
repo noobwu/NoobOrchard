@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ClientConfiguration xmlns="urn:orleans">
+  <!--Store配置 Start-->
+  
+  <!--Custom配置 Start-->
+  
+  <!--Consul配置-->
+  <!--<SystemStore SystemStoreType="Custom" CustomGatewayProviderAssemblyName="OrleansConsulUtils"
+             DataConnectionString="http://127.0.0.1:8500" DeploymentId="NoobServicesOrleans" />-->
+  
+  <!--ZooKeeper配置-->
+  <!--<SystemStore SystemStoreType="Custom" DataConnectionString="127.0.0.1:2181"
+               DeploymentId="NoobServicesOrleans"  MembershipTableAssembly="OrleansZooKeeperUtils" />-->
+  <!--Custom配置 End-->
+  
+  <!--SqlServer配置-->
+  <SystemStore SystemStoreType ="SqlServer"
+          DeploymentId="NoobServicesOrleans"
+          DataConnectionString="Data Source=.;Initial Catalog=OrleansDemo;User ID=sa;Password=123456;Pooling=true;Max Pool Size=200;Asynchronous Processing=True;MultipleActiveResultSets=True;"
+                AdoInvariant="System.Data.SqlClient" />
+  
+  <!--Store配置 End-->
+
+  <!--<Gateway Address="localhost" Port="40000" Proxied="true" />-->
+   <Tracing DefaultTraceLevel="Info" TraceToConsole="false" TraceToFile="{0}-{1}.log">
+    <TraceLevelOverride LogPrefix="Application" TraceLevel="Info" />
+    <TraceLevelOverride LogPrefix="Runtime" TraceLevel="Info" />
+    <TraceLevelOverride LogPrefix="Tetris" TraceLevel="Info" />
+  </Tracing>
+   
+  <!--Statistics配置 Start-->
+  <!--<StatisticsProviders>
+    <Provider Type="Orleans.Providers.SqlServer.SqlStatisticsPublisher" Name="SQLServerStatsProvider"
+              ConnectionString="Data Source=.;Initial Catalog=OrleansDemo;User ID=sa;Password=123456;Pooling=true;Max Pool Size=200;Asynchronous Processing=True;MultipleActiveResultSets=True;" />
+  </StatisticsProviders>-->
+  <!--<Statistics ProviderType="SQLServerStatsProvider" MetricsTableWriteInterval="10s" PerfCounterWriteInterval="30s"
+              LogWriteInterval="300s" WriteLogStatisticsToTable="true"/>-->
+  <Statistics  MetricsTableWriteInterval="10s" PerfCounterWriteInterval="30s"
+            LogWriteInterval="300s" WriteLogStatisticsToTable="true"/>
+  <!--Statistics配置 End-->
+  <Messaging>
+    <SerializationProviders>
+      <Provider type="NoobOrleans.Core.JsonSerializer,NoobOrleans.Core"/>
+      <!--<Provider type="OrleansLinqUtils.LinqSerializer,OrleansLinqUtils"/>-->
+      <!--<Provider type="Orleans.Serialization.ILBasedSerializer,Orleans"/>-->
+      <!--<Provider type="Orleans.Serialization.BinaryFormatterSerializer,Orleans"/>-->
+    </SerializationProviders>
+    <!--<FallbackSerializationProvider type="OrleansLinqUtils.LinqSerializer,OrleansLinqUtils" />-->
+    <!--<FallbackSerializationProvider type="Orleans.Serialization.ILBasedSerializer,Orleans" />-->
+    <!--<FallbackSerializationProvider type="Orleans.Serialization.BinaryFormatterSerializer,Orleans"/>-->
+  </Messaging>
+</ClientConfiguration>

@@ -1,0 +1,162 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "添加资讯类别";
+}
+@model Noob.Web.Admin.Models.CmsNewsCategoryModel
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%">
+                <tr>
+                    <td align="right">类别名称：</td>
+                    <td><input type="text" id="txtCategoryName" class="easyui-textbox easyui-validatebox" data-options='required:true,validType: "length[0,100]"' name="CategoryName" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">类别标识：</td>
+                    <td><input type="text" id="txtCategoryCode" class="easyui-textbox easyui-validatebox" data-options='required:true,validType: "length[0,100]"' name="CategoryCode" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">父级分类：</td>
+                    <td><input id="sltParentID" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">排序：</td>
+                    <td><input type="text" id="txtSortOrder" value="0" class="easyui-textbox easyui-validatebox" data-options='required:true,validType: "number"' name="SortOrder" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">类型：</td>
+
+                    <td>
+                        <select id="sltCategoryType" name="CategoryType" class="easyui-combobox" style="width:150px;">
+                            <option selected="selected" value="0">资讯</option>
+                            <option selected="selected" value="1">视频资讯</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle"> 图片：</td>
+                    <td>
+                        <!--image_upload container start-->
+                        <div id="image_upload_container" class="image_upload_container">
+                            <!--头部，相册选择和格式选择-->
+                            <div id="uploader" class="image_upload">
+                                <div class="queueList">
+                                    <div id="dndArea" class="placeholder">
+                                        <div id="filePicker"></div>
+                                        <p>或将照片拖到这里</p>
+                                    </div>
+                                </div>
+                                <div class="statusBar" style="display:none;">
+                                    <div class="progress">
+                                        <span class="text">0%</span>
+                                        <span class="percentage"></span>
+                                    </div><div class="info"></div>
+                                    <div class="btns">
+                                        <div id="filePicker2" class="filePicker2"></div><div class="uploadBtn">开始上传</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--image_upload container end -->
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="ParentID" value="@ViewBag.pid" id="hidPid" />
+        </form>
+
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right; height:33px; padding:3px 10px 0;">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btn_saveItem" href="javascript:void(0)" onclick="saveData()" style="width:80px">保存</a>
+    </div>
+</div>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/clear.js")"></script>
+
+<!--webuploader 开始-->
+<link rel="stylesheet" type="text/css" href="@Url.Content(ViewBag.RootUrl + "Scripts/webuploader/webuploader.css")">
+<link rel="stylesheet" type="text/css" href="@Url.Content(ViewBag.RootUrl + "Scripts/webuploader/css/image_uploads_admin.css")">
+<script type="text/javascript" src='@Url.Content(ViewBag.RootUrl + "Scripts/webuploader/webuploader.min.js")'></script>
+<script type="text/javascript" src='@Url.Content(ViewBag.RootUrl + "Scripts/webuploader/js/image_uploads.js")'></script>
+<!--webuploader 结束-->
+
+<script type="text/javascript">
+    var rootUrl = '/';
+    var uploadUrl = "/Uploads";
+
+    //初始化值
+    $(function () {
+        $("#sltParentID").combotree({
+            url: rootUrl + "NewsCategory/GetSubList?t=" + Math.random(),
+            method: "get",
+            required: false,
+            panelHeight: 200,
+            value: $("#hidPid").val() == "0" ? "" : $("#hidPid").val()
+        }).combobox("initClear");
+
+        /* ----------------image_upload Start--------------------- */
+        initUploads({ auto: true, imgDir: 'NewsCategory/Images'});
+        /* ----------------image_upload End--------------------- */
+    });
+
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-validatebox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).validatebox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+    function saveData() {
+        var pid = $("#sltParentID").combotree("getValue");
+        if (pid == undefined || pid == "") {
+            $("#hidPid").val("0");
+        }
+        else {
+            $("#hidPid").val(pid);
+        }
+        var flag = formIsValid();
+        if (!flag) {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        var data = $("#add_data").serialize();
+        $.ajax({
+            type: "POST",
+            url: rootUrl + "NewsCategory/Create",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            reloadData();
+                            closeDialog();
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>
+

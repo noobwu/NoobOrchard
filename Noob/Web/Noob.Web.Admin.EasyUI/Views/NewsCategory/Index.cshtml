@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "资讯类别";
+}
+<style type="text/css">
+    .thumb {
+        MARGIN: auto;
+        WIDTH: 100px;
+        border: 1px solid #dadada;
+        padding: 2px;
+    }
+
+        .thumb img {
+            MAX-WIDTH: 100% !important;
+            HEIGHT: auto !important;
+            width: expression(this.width > 96 ? "96px" : this.width) !important;
+        }
+</style>
+<div data-options="region:'center',border:false" class="divCenter">
+    <table id="dg"></table>
+    <div id="tbar" style="text-align:right">
+        <a href="javascript:void(0)" onclick="createModule()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="display:@ViewBag.Create">添加</a>
+        <a href="javascript:void(0)" onclick="updateModule()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="display:@ViewBag.Edit">编辑</a>
+        <a href="javascript:void(0)" onclick="deleteModule()" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="display:@ViewBag.Delete">删除</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var isEdit = "1";
+    var isUpdateStatus = "1";
+</script>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/CMS/NewsCategory.js")"></script>
+

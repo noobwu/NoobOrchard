@@ -1,0 +1,114 @@
+﻿@model Noob.Web.Admin.Models.AdmRightsTypeModel
+@{
+    Layout = null;
+}
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%">
+                <tr>
+                    <td align="right">权限类别名称：</td>
+                    <td><input type="text" name="TypeName" value="@Model.TypeName" class="easyui-textbox" data-options="required:true" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">父级权限类别：</td>
+                    <td><input id="menuTree" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">排序大小：</td>
+                    <td><input type="text" class="easyui-numberbox" name="SortOrder" value="@Model.SortOrder" style="width:150px;" /></td>
+                </tr>
+            </table>
+            <input type="hidden" name="RightsTypeID" value="@Model.RightsTypeID" />
+            <input type="hidden" name="ParentID" value="@Model.ParentID" id="hidPid" />
+        </form>
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right; height:33px; padding:3px 10px 0;">
+        <a class="easyui-linkbutton" id="btn_saveItem" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="saveData()" style="width:80px">保存</a>
+    </div>
+</div>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/clear.js")"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#menuTree").combotree({
+            url: rootUrl+"RightsType/GetSubList?t=" + Math.random()+"&selfId=@Model.RightsTypeID",
+            method: "get",
+            required: false,
+            panelHeight: 200,
+            value: $("#hidPid").val() == "0" ? "" : $("#hidPid").val()
+        }).combobox("initClear");
+    });
+
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-textbox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).textbox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+    function saveData() {
+        var flag = formIsValid();
+        if (!flag)
+        {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        triminput("#add_data");
+
+        var pid = $("#menuTree").combotree("getValue");
+        if (pid == undefined || pid == "") {
+            $("#hidPid").val("0");
+        }
+        else {
+            $("#hidPid").val(pid);
+            var t = $('#menuTree').combotree('tree');
+            var node = t.tree('getSelected');
+        }
+
+     var data = $("#add_data").serialize();
+
+     //显示遮罩,by michael in 2014/7/9
+     loading({ btn: 'btn_saveItem' });
+
+        $.ajax({
+            type: "POST",
+            url: rootUrl+"RightsType/Edit",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code!=undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            reloadData();
+                            closeDialog();
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                // console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>
+

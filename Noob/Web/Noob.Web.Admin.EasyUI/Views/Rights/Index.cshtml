@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "权限管理";
+}
+<style type="text/css">
+    .tree-folder {
+        width: 0px;
+    }
+
+    .tree-file {
+        width: 0px;
+    }
+</style>
+<div data-options="region:'center',border:false" class="divCenter" style="vertical-align: top;">
+    <input id="hidid" type="hidden" value="0" />
+    <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="220px" valign="top">
+                <div class="sort-header" style="width: 220px; display: block;">
+                    <div class="sort-title">
+                        权限分类列表
+                    </div>
+                    <div class="sort-right">
+                    </div>
+                </div>
+                <div class="sort-content" style="width: 220px; display: block; ">
+                    <div style="width: 220px; overflow-x: hide; overflow-y: auto; text-align: left;"
+                         id="treeH">
+                        <ul id="ModuleTree"></ul>
+                    </div>
+                </div>
+            </td>
+            <td valign="top" style="padding-left: 10px; width: 100%;">
+                <table id="tg" class="easyui-datagrid" title="权限列表" data-options="
+				rownumbers: true,
+				animate: true,
+				fitColumns: true,
+                idField:'id',
+				method: 'post',
+                toolbar: '#tbar'
+			">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'ck',checkbox: true">
+                            </th>
+                            <th data-options="field:'name',width:180,halign:'center',align:'center'">
+                                权限名称
+                            </th>
+                            <th data-options="field:'RightsCode',width:100,halign:'center',align:'center'">
+                                权限代码
+                            </th>
+                            <th data-options="field:'TypeName',width:100,halign:'center',align:'center'">
+                                权限类别名称
+                            </th>
+                            <th data-options="field:'RightsType',width:100,halign:'center',align:'center'">
+                                权限类型
+                            </th>
+                            <th data-options="field:'SortOrder',width:100,halign:'center',align:'center'">
+                                排序大小
+                            </th>
+                            <th data-options="field:'CreateDT',width:100,halign:'center',align:'center'">
+                                创建时间
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="tbar" style="text-align: right">
+                    <a href="javascript:void(0)" onclick="createData()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="display:@ViewBag.Create">
+                        添加
+                    </a> <a href="javascript:void(0)" onclick="updateData()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="display:@ViewBag.Edit">
+                        编辑
+                    </a> <a href="javascript:void(0)" onclick="deleteData()" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="display:@ViewBag.Delete">
+                        删除
+                    </a>
+                </div>
+                <div id="mm" class="easyui-menu" style="width: 120px;">
+                    <div onclick="createData()" data-options="iconCls:'icon-add'" style="display:@ViewBag.Create">
+                        添加权限
+                    </div>
+                    <div onclick="updateData()" data-options="iconCls:'icon-edit'" style="display:@ViewBag.Edit">
+                        编辑权限
+                    </div>
+                    <div onclick="deleteData()" data-options="iconCls:'icon-cut'" style="display:@ViewBag.Delete">
+                        删除权限
+                    </div>
+                    <div class="menu-sep">
+                    </div>
+                    <div onclick="reloadData()" data-options="iconCls:'icon-reload'">
+                        刷新
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/Admin/Rights.js")"></script>
+

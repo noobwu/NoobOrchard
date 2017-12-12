@@ -1,0 +1,111 @@
+﻿@model Noob.Web.Admin.Models.AdmUserModel
+@{
+    ViewBag.Title = "用户详情";
+}
+<style type="text/css">
+    .easyui-textbox {
+         width:150px;
+    }
+</style>
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            <table width="100%">
+                <tr>
+                    <td align="right">用户账号：</td>
+                    <td><input type="text" name="UserName" value="@(Model.UserName)" class="easyui-textbox  easyui-validatebox" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">真实姓名：</td>
+                    <td><input type="text" value="@Model.TrueName" name="TrueName" class="easyui-textbox easyui-validatebox" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">邮箱地址：</td>
+                    <td>
+                        <input type="text" name="Email" value="@Model.Email" class="easyui-textbox easyui-validatebox" data-options="validType:'email',required:true" /><span style="color:Red">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">手机号码：</td>
+                    <td><input type="text" name="Mobile" value="@Model.Mobile" class="easyui-textbox easyui-validatebox" data-options="validType:'mobile',required:true" /><span style="color:Red">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">办公电话：</td>
+                    <td><input type="text" name="Phone" value="@Model.Phone" class="easyui-textbox easyui-validatebox" data-options="validType:'phone',required:true" /><span style="color:Red">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">账号状态：</td>
+                    <td>
+                        <select name="Status" id="sltStatus" style="width:126px;" class="easyui-combobox " editable="false" data-options='panelHeight:50'>
+                            <option value="1">启用</option>
+                            <option value="0">禁用</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">所属组织机构：</td>
+                    <td>
+                        <input type="text" id="txtOrgID" style="width:122px;" class="easyui-combobox" editable="false" data-options='panelHeight:100,required:true' name="OrgID" />
+                        <span style="color:Red">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">所属用户组：</td>
+                    <td>
+                        <input type="text" id="txtGroupId" name="GroupId" class="easyui-combobox" editable="false" data-options='panelHeight:100,required:true,multiple:true' />
+                        <span style="color:Red">*</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">用户组说明：</td>
+                    <td>
+                        <input type="text" style="height:80px;width:180px" name="Description" class="easyui-textbox easyui-validatebox" data-options="multiline:true,required:true" value="@Model.Description" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="UserID" value="@Model.UserID" />
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    //绑定部门
+    $(function () {
+        //checkIsEdit();
+        var deptValue = "@Model.OrgID";
+        $("#txtOrgID").combotree({
+            url: rootUrl+"Organization/GetSubList?t=" + Math.random(),
+            method: "get",
+            required: false,
+            panelHeight: 100,
+            value: deptValue,
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#txtOrgID').combotree('clear');
+                    return false;
+                }
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#txtOrgID').combo('showPanel');
+                    $(this).tree("expand", node.target);
+                }
+
+            }
+        });
+        var groupId = "@Model.GroupId";
+        $("#txtGroupId").combotree({
+            url: rootUrl+"Group/GetTreeList?t=" + Math.random(),
+            method: "get",
+            required: true,
+            multiple: true,
+            panelHeight: 100,
+            value: groupId
+        });
+    });
+    $("#sltStatus").val(@Model.Status);
+
+</script>
+
+

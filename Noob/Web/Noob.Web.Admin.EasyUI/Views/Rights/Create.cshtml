@@ -1,0 +1,105 @@
+﻿@{
+    Layout = null;
+}
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%">
+                <tr>
+                    <td align="right">权限名称：</td>
+                    <td><input type="text" id="txtRightsName" name="RightsName" class="easyui-textbox" data-options="required:true" maxlength="20" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">权限代码：</td>
+                    <td>
+                        <input type="text" name="RightsCode" class="easyui-textbox" data-options="required:true" maxlength="50" /><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">权限类型：</td>
+                    <td>
+                        <select name="RightsType" id="sltRightsType" style="width:126px;" class="easyui-combobox" editable="false" data-options='panelHeight:50'>
+                            <option value="1">普通权限</option>
+                            <option value="0">菜单权限</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">排序大小：</td>
+                    <td><input type="text" class="easyui-numberbox" name="SortOrder" style="width:126px" value="0" /></td>
+                </tr>
+                <tr>
+                    <td align="right">权限说明：</td>
+                    <td>
+                        <input type="text" style="height:80px;width:180px" name="Description" class="easyui-textbox" data-options="multiline:true,required:true" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>  
+            </table>
+            <input type="hidden" value="@ViewBag.tid" name="RightsTypeID" id="hidRightsTypeID" />
+        </form>
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right; height:33px; padding:3px 10px 0;">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btn_saveItem" href="javascript:void(0)" onclick="saveActionData()" style="width:80px">保存</a>
+    </div>
+</div>
+<script type="text/javascript">
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-textbox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).textbox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+
+    function saveActionData() {
+        var flag = formIsValid();
+        if (!flag)
+        {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        triminput("#add_data");
+        var data = $("#add_data").serialize();
+        $.ajax({
+            type: "POST",
+            url: rootUrl+"Rights/Create",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            reloadData($('#hidRightsTypeID').val());
+                            closeDialog();
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>
+

@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎您 - 互联网站内容管理系统</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<body>
+
+    <div class="container body-content">
+        <h1 class="text-danger">欢迎您。</h1>
+        <h2 class="text-danger">互联网站内容管理系统欢迎您。</h2>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 互联网站内容管理系统</p>
+        </footer>
+    </div>
+     @Scripts.Render("~/bundles/bootstrap")
+    <!-- End Browser Link -->
+
+</body>
+</html>
+

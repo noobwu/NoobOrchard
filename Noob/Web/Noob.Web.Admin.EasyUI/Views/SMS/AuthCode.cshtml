@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "手机验证码";
+}
+<style type="text/css">
+    .tree-folder {
+        width: 0px;
+    }
+
+    .tree-file {
+        width: 0px;
+    }
+</style>
+<div data-options="region:'north',border:true,iconCls:'icon-search'" title="查询" class="divNorth">
+    <table>
+        <tr>
+            <td>手机号码：</td>
+            <td><input type="text" id="txtSearchMobile" name="SearchMobile" class="easyui-textbox" /></td>
+            <td align="right">验证时间：</td>
+            <td><input type="text" id="txtSearchStartTime" name="SearchStartTime" data-options="less:'txtSearchEndTime'" class="easyui-datebox easyui-textbox" editable="false" /></td>
+            <td align="right">至：</td>
+            <td><input type="text" id="txtSearchEndTime" name="SearchEndTime" data-options="more:'txtSearchStartTime'" class="easyui-datebox easyui-textbox" editable="false" /></td>
+            <td class="tdTitle">使用状态：</td>
+            <td>
+                <select name="SearchStatus" id="sltSearchStatus" style="width:126px;" class="easyui-combobox " editable="false" data-options='panelHeight:50'>
+                    <option value="">请选择</option>
+                    <option value="0">未使用</option>
+                    <option value="1">发已使用</option>
+
+                </select>
+            </td>
+            <td class="tdTitle"><a href="#" id="btn_search" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px" onclick="searchData()">查 询</a></td>
+        </tr>
+    </table>
+</div>
+<div data-options="region:'center',border:false" class="divCenter">
+    <table id="dg"></table>
+</div>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/SMS/AuthCode.js")"></script>

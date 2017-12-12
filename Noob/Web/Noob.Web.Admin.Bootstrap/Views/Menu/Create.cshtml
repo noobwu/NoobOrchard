@@ -1,0 +1,506 @@
+﻿@{
+    ViewBag.Title = "菜单添加";
+}
+<!-- BEGIN CONTENT BODY -->
+<div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+
+    <!-- BEGIN THEME PANEL -->
+    @Html.Partial("_Metronic_Theme")
+    <!-- END THEME PANEL -->
+    <h1 class="page-title">
+       菜单添加
+        <small>菜单添加</small>
+    </h1>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="../../Home">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">系统管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">权限管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <span>菜单管理</span>
+            </li>
+        </ul>
+        <div class="page-toolbar">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                    Actions
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li>
+                        <a href="#">
+                            <i class="icon-bell"></i> Action
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-shield"></i> Another action
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-user"></i> Something else here
+                        </a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-bag"></i> Separated link
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <div class="m-heading-1 border-green m-bordered">
+        <h3>jQuery Validation Plugin</h3>
+        <p>
+            This jQuery plugin makes simple clientside form validation easy, whilst still offering plenty of customization options. For more info please check out
+            <a class="btn red btn-outline" href="http://jqueryvalidation.org" target="_blank">the official documentation</a>
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet light portlet-fit portlet-form ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject font-dark sbold uppercase">菜单添加</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form action="#" id="submitForm" class="form-horizontal">
+                        @Html.AntiForgeryToken()
+                        <div class="form-body">
+                            <div class="alert alert-danger display-hide">
+                                <button class="close" data-close="alert"></button>有必填项为空或输入数据格式不对，请检查！
+                            </div>
+                            <div class="alert alert-success display-hide">
+                                <button class="close" data-close="alert"></button> 验证成功!
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">
+                                    菜单名称：
+                                    <span class="required"> * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" name="MenuName"  required="required" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    菜单代码：
+                                    <span class="required"> * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" name="MenuCode"  required="required" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">
+                                    父级菜单：
+                                </label>
+                                <div class="col-md-4">
+                                    <div class="portlet-body">
+                                        <div id="treeParentID" class="jstree">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">
+                                    菜单类型：
+                                    <span class="required"> * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <select class="form-control select2" name="MenuType" id="sltMenuType" required="required">
+                                        <option value="0">菜单类别</option>
+                                        <option value="1">菜单</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group"  style="display:none;" id="divRights">
+                                <label class="control-label col-md-3">
+                                    菜单权限：
+                                </label>
+                                <div class="col-md-4">
+                                    <div class="portlet-body">
+                                        <div id="treeRightsTypeID" class="jstree">
+
+                                        </div>
+                                       <select class="form-control select2" id="sltRightsID"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    Url地址：
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" name="MenuUrl"  class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    排序大小：
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" name="SortOrder" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class="btn green">保存</button>&nbsp;&nbsp;
+                                    <button type="button" class="btn default" id="btnCancel">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="ParentID" value="@ViewBag.pid" id="hidPid" />
+                        <input type="hidden" name="RightsTypeID" value="@ViewBag.rightsTypeID" id="hidRightsTypeID" />
+                        <input type="hidden" name="RightsID" value="@ViewBag.rightsID" id="hidRightsID" />
+
+                    </form>
+                    <!-- END FORM-->
+                </div>
+                <!-- END VALIDATION STATES-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTENT BODY -->
+@section Meta{
+    <title>菜单添加</title>
+}
+@section PageLevelPluginsStyles{
+    <link href="../../Content/theme/metronic/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+}
+@section PageLevelPluginsScripts{
+    <script src="../../Content/theme/metronic/assets/global/plugins/select2/js/select2.full.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/jstree/dist/jstree.min.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
+}
+
+@section PageLevelScripts
+{
+    <script src="../../Scripts/Admin/form-validation.js" type="text/javascript"></script>
+}
+
+@section BodyScripts
+{
+    <script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/clear.js")"></script>
+    <script type="text/javascript">
+    var ComponentsSelect2 = function() {
+
+            var handleSelect2 = function() {
+
+                // Set the "bootstrap" theme as the default theme for all Select2
+                // widgets.
+                //
+                //https://github.com/select2/select2/issues/2927
+                $.fn.select2.defaults.set("theme", "bootstrap");
+                   var placeholder = "Select a State";
+                 //https://select2.github.io/examples.html#data-ajax
+                function formatRepo(repo) {
+                    if (repo.loading) return repo.text;
+                    return repo.text;
+                }
+
+                function formatRepoSelection(repo) {
+                    return repo.text;
+                }
+                 $("#sltAjax").select2({
+                    width: "off",
+                    ajax: {
+                        url: rootUrl+"Menu/GetSubList?t=" + Math.random(),
+                        dataType: 'json',
+                        data: function(params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page
+                            };
+                        },
+                        processResults: function(data, page) {
+                            // parse the results into the format expected by Select2.
+                            // since we are using custom formatting functions we do not need to
+                            // alter the remote JSON data
+                            return {
+                                results: data
+                            };
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function(markup) {
+                        return markup;
+                    }, // let our custom formatter work
+                    minimumInputLength: 1,
+                    templateResult: formatRepo,
+                    templateSelection: formatRepoSelection
+                });
+                 $("button[data-select2-open]").click(function() {
+                    $("#" + $(this).data("select2-open")).select2("open");
+                });
+
+                $(":checkbox").on("click", function() {
+                    $(this).parent().nextAll("select").prop("disabled", !this.checked);
+                });
+
+                // copy Bootstrap validation states to Select2 dropdown
+                //
+                // add .has-waring, .has-error, .has-succes to the Select2 dropdown
+                // (was #select2-drop in Select2 v3.x, in Select2 v4 can be selected via
+                // body > .select2-container) if _any_ of the opened Select2's parents
+                // has one of these forementioned classes (YUCK! ;-))
+                $(".select2, .select2-multiple, .select2-allow-clear, .js-data-example-ajax").on("select2:open", function() {
+                    if ($(this).parents("[class*='has-']").length) {
+                        var classNames = $(this).parents("[class*='has-']")[0].className.split(/\s+/);
+
+                        for (var i = 0; i < classNames.length; ++i) {
+                            if (classNames[i].match("has-")) {
+                                $("body > .select2-container").addClass(classNames[i]);
+                            }
+                        }
+                    }
+                });
+
+                $(".js-btn-set-scaling-classes").on("click", function() {
+                    $("#select2-multiple-input-sm, #select2-single-input-sm").next(".select2-container--bootstrap").addClass("input-sm");
+                    $("#select2-multiple-input-lg, #select2-single-input-lg").next(".select2-container--bootstrap").addClass("input-lg");
+                    $(this).removeClass("btn-primary btn-outline").prop("disabled", true);
+                });
+            }
+
+            return {
+                //main function to initiate the module
+                init: function() {
+                    handleSelect2();
+                }
+            };
+
+        }();
+        /* Start loadRights */
+        function loadRightsByAjax()
+        {
+            var  rightsTypeID=$("#hidRightsTypeID").val() == "0" ? "" : $("#hidRightsTypeID").val();
+            function formatRepo(repo) {
+                return repo.text;
+            }
+            function formatRepoSelection(repo) {
+                return repo.text;
+            }
+           $("#sltRightsID").select2({
+                width: "off",
+                ajax: {
+                    url: rootUrl+"Rights/GetMenuRights?id=" + rightsTypeID + "&t=" + Math.random(),
+                    dataType: 'json',
+                    processResults: function(data, page) {
+                        // parse the results into the format expected by Select2.
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 0,
+                templateResult: formatRepo,
+                templateSelection: formatRepoSelection
+            });
+        }
+        function loadRights()
+        {
+            var  rightsTypeID=$("#hidRightsTypeID").val() == "0" ? "" : $("#hidRightsTypeID").val();
+            $.ajax({
+                 url:rootUrl+"Rights/GetMenuRights?id=" + rightsTypeID + "&t=" + Math.random(),
+                 dataType:"json",
+                 success:function(data){
+                      $("#sltRightsID").empty()
+                      //$('#sltRightsID').select2('destroy');
+                      //$('#sltRightsID').select2();
+                      $("#sltRightsID").select2({
+                         placeholder:'请选择',//默认文字提示
+                         data: data,
+                         allowClear: true//允许清空
+                     });
+                 },
+                 error:function(data){
+
+                 },
+                 cache: true
+           });
+        }
+        function saveData() {
+            App.startPageLoading({ animate: true });
+            trimInput("#submitForm");
+            var data = $("#submitForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: rootUrl + "Menu/Create",
+                data: data,
+                success: function (data) {
+                    App.stopPageLoading();
+                    if (data.Code != undefined) {
+                        if (data.Code == 1) {
+                            showMsg('保存成功。', true);
+                            goToUrl();
+                        }
+                        else {
+                            showMsg(data.Msg, false);
+                        }
+                    }
+                    else {
+                        showMsg('很抱歉！系统错误，请联系管理人员！', false);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    App.stopPageLoading();
+                    // alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    // alert(textStatus);
+                    //console.log(errorThrown);
+                    showMsg('很抱歉！保存失败，请重新提交！', false);
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    this; // 调用本次AJAX请求时传递的options参数
+                }
+            });
+        }
+        function showMsg(msg, success)
+        {
+            if (success) {
+                swal("提示!", msg, "success");
+            }
+            else {
+                swal("提示!", msg, "error");
+            }
+        }
+        function goToUrl()
+        {
+            setTimeout(function () {
+                window.location.href = '../Index';
+            }, 2000);
+
+        }
+        $(function () {
+             init();
+
+        });
+        function init() {
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(document.body).on("change", "#sltMenuType", function () {
+                var val = this.value;
+                if (val == "1") {
+                    $("#divRights").css("display", "");
+                }
+                else {
+                    $("#divRights").css("display", "none");
+                }
+            });
+            $('#btnCancel').click(function () {
+                goUrl('../../Menu/Index');
+            });
+            bind();
+        }
+        function bind()
+        {
+            //ComponentsSelect2.init();
+			//$.jstree.defaults.conditionalselect = function () { return false; };
+            var parentId=$("#hidPid").val() == "0" ? "" : $("#hidPid").val();
+            var treeParentID=$('#treeParentID').on('changed.jstree', function (e, data) {
+                    var i, j, r = [];
+                    for(i = 0, j = data.selected.length; i < j; i++) {
+                      r.push(data.instance.get_node(data.selected[i]).text);
+                      //console.log('treeParentID:'+data.selected[i]);
+                    }
+
+                }).jstree({
+		        'core' : {
+			        'data' : {
+				        "url" : rootUrl+"Menu/GetSubList?t=" + Math.random()+"&id="+parentId,
+				        "dataType" : "json" // needed only if you do not supply JSON headers
+			        }
+		        }
+	        });
+
+	      $(treeParentID).bind("select_node.jstree", function(evt, data) {
+		        if(data&&data.selected&&data.node)
+			    {
+			     if(parentId==data.selected[0])
+			     {
+			        parentId="";
+				    //$('#treeParentID').jstree("deselect_all");//取消所有选中的节点
+				    $('#treeParentID').jstree("deselect_node",data.node);//取消选中的当前节点
+			     }
+			     else
+			     {
+			       parentId=data.selected[0];
+			     }
+                 $("#hidPid").val(parentId);
+			}
+			/*
+			node:Object
+			selected:Array
+			*/
+			/*
+			for(var i in data) {//不使用过滤
+				console.log(i,":",data[i]);
+			}	*/
+
+          });
+          $(treeParentID).bind("deselect_node.jstree", function(evt, data) {
+            console.log("deselected!");
+          });
+
+          var rightsTypeId=$("#hidRightsTypeID").val() == "0" ? "" : $("#hidRightsTypeID").val();
+          $('#treeRightsTypeID').on('changed.jstree', function (e, data) {
+                    var i, j, r = [];
+                    var selectedRightsTypeID;
+                    for(i = 0, j = data.selected.length; i < j; i++) {
+                      //r.push(data.instance.get_node(data.selected[i]).text);
+                      //console.log('treeRightsTypeID:'+data.selected[i]);
+                      selectedRightsTypeID=data.selected[i];
+                    }
+                     $("#hidRightsTypeID").val(selectedRightsTypeID);
+                     loadRights();
+
+                }).jstree({
+		        'core' : {
+			        'data' : {
+				        "url" :rootUrl+"RightsType/GetTreeList?t=" + Math.random()+"&id="+rightsTypeId,
+				        "dataType" : "json" // needed only if you do not supply JSON headers
+			        }
+		        }
+	        });
+        }
+    </script>
+}

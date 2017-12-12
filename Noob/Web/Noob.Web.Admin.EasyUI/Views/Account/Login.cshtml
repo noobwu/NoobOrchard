@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+@model Noob.Web.Admin.Models.Account.LoginModel
+<!DOCTYPE html>
+<html>
+<head id="logon_head">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互联网站内容管理系统</title>
+    @Styles.Render("~/style/admin")
+    @Styles.Render("~/style/easyui")
+    @Scripts.Render("~/script/easyui")
+</head>
+<body class="loginBody">
+    <form id="formLogin" action="@Url.Content(ViewBag.RootUrl + "Account/Login")" method="post">
+        @Html.AntiForgeryToken()
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%;padding-top:150px;">
+            <tr>
+                <td align="center">
+                    <div class="easyui-panel" title="互联网站内容管理系统" style="width:400px;padding:30px 70px 20px 70px">
+                        <div style="margin-bottom:10px">
+                            <input class="easyui-textbox" id="txtName" name="UserName" value="@Model.UserName" style="width:100%;height:40px;padding:12px" data-options="prompt:'用户名',iconCls:'icon-man',iconWidth:38,required:true">
+                        </div>
+                        <div style="margin-bottom:10px">
+
+                            <input class="easyui-textbox" id="txtPass" name="Password" type="password" style="width:100%;height:40px;padding:12px" data-options="prompt:'密码',iconCls:'icon-lock',iconWidth:38,required:true">
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="padding:5px 0px;width:260px;font-size:14px;height:40px;" onclick="checkForm()" id="linkLogin">
+                                <span style="font-size:14px;">登　录</span>
+                            </a>
+                        </div>
+                        <div style="text-align:center;" id="divError">@Html.ValidationSummary()</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="loginBottom">
+            Copyright (c) 互联网站内容管理系统 All Rights Reserved.
+        </div>
+    </form>
+</body>
+</html>
+<script type="text/javascript">
+        if (self != top) { top.location = self.location; }
+        function checkForm() {
+            if ($.trim($("#txtName").val()) == "") {
+                $("#divError").html("请输入账号");
+            }
+            else if ($.trim($("#txtPass").textbox("getValue")) == "") {
+                $("#divError").html("请输入密码");
+                return false;
+            }
+            $('#formLogin').submit();
+            return true;
+        }
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null)
+                return unescape(r[2]);
+            return null;
+        }
+</script>

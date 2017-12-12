@@ -1,0 +1,101 @@
+﻿@model Noob.Web.Admin.Models.AdmAreaModel
+@{
+    Layout = null;
+}
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%">
+                <tr>
+                    <td align="right">地区编号：</td>
+                    <td><input id="txtAreaID" type="text" value="@Model.AreaID" name="AreaID" class="easyui-numberbox" data-options="required:true" style="width:150px;" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">地区名称：</td>
+                    <td><input id="txtAreaName" type="text" value="@Model.AreaName" name="AreaName" class="easyui-label" data-options="required:true" style="width:150px;" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">地区类型：</td>
+                    <td>
+                        <select id="sltLevelType" name="LevelType" class="easyui-combobox" style="width:150px;">
+                            <option selected="selected" value="1">直辖市或者省</option>
+                            <option selected="selected" value="2">直辖市或省下市</option>
+                            <option selected="selected" value="3">直辖市区县</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">地区简称：</td>
+                    <td><input type="text" id="txtShortName" value="@Model.ShortName" class="easyui-label" data-options='required:true,validType: "length[0,50]"' name="ShortName" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">区号：</td>
+                    <td><input type="text" id="txtCityCode" value="@Model.CityCode" class="easyui-label" data-options='validType: "length[0,50]"' name="CityCode" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">邮编：</td>
+                    <td><input type="text" id="txtZipCode" value="@Model.ZipCode" class="easyui-label" data-options='validType: "length[0,50]"' name="ZipCode" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">经度：</td>
+                    <td><input type="text" id="txtLng" value="@Model.Lng" class="easyui-label" data-options='required:true' name="Lng" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">纬度：</td>
+                    <td><input type="text" id="txtLat" value="@Model.Lat" class="easyui-label" data-options='required:true' name="Lat" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">拼音：</td>
+                    <td><input type="text" id="txtPinYin" value="@Model.PinYin" class="easyui-label" data-options='validType: "length[0,50]"' name="PinYin" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">拼音缩写：</td>
+                    <td><input type="text" id="txtShortPinYin" value="@Model.ShortPinYin" class="easyui-label" data-options='validType: "length[0,20]"' name="ShortPinYin" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">拼音第一个字母：</td>
+                    <td><input type="text" id="txtPYFirstLetter" value="@Model.PYFirstLetter" class="easyui-label" data-options='validType: "length[0,10]"' name="PYFirstLetter" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">排序：</td>
+                    <td><input type="text" id="txtSortOrder" value="@Model.SortOrder" class="easyui-label" data-options='required:true,validType: "number"' name="SortOrder" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">账号状态：</td>
+                    <td>
+                        <select name="Status" id="sltStatus" style="width:126px;" class="easyui-combobox" editable="false" data-options='panelHeight:50,required:true'>
+                            <option value="1">启用</option>
+                            <option value="0">禁用</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="ParentId" value="@Model.ParentId" />
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        Init();
+    });
+    function Init() {
+        $("#sltStatus").val(@Model.Status);
+    }
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-validatebox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).validatebox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+
+</script>
+

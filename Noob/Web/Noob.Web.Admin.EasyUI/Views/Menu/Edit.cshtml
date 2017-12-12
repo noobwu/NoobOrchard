@@ -1,0 +1,196 @@
+﻿@model Noob.Web.Admin.Models.AdmMenuModel
+@{
+    Layout = null;
+}
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%">
+                <tr>
+                    <td align="right">菜单名称：</td>
+                    <td><input type="text" name="MenuName" value="@Model.MenuName" class="easyui-textbox" data-options="required:true"   /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">菜单代码：</td>
+                    <td><input type="text" name="MenuCode" value="@Model.MenuCode" class="easyui-textbox" data-options="required:false"  /></td>
+                </tr>
+                <tr>
+                    <td align="right">父级菜单：</td>
+                    <td><input id="menuTree"  /></td>
+                </tr>
+                <tr>
+                    <td align="right">菜单类型：</td>
+                    <td>
+                        <select name="MenuType" id="sltMenuType" style="width:126px;" class="easyui-combobox" editable="false" 
+                                data-options='panelHeight:50'>
+                            <option value="0">菜单类别</option>
+                            <option value="1">菜单</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr id="trRights" style="display:none;">
+                    <td align="right">菜单权限：：</td>
+                    <td>
+                        <input id="rightsTypeTree" style="width:120px;" />
+                        <input id="rightsTree" style="width:120px;" />
+                    </td>
+                </tr>
+                <tr id="trMenuUrl">
+                    <td align="right">Url地址：</td>
+                    <td><input type="text" id="txtMenuUrl" name="MenuUrl" class="easyui-textbox" style="width:200px;" value="@Model.MenuUrl" /></td>
+                </tr>     
+                <tr>
+                    <td align="right">排序大小：</td>
+                    <td><input type="text" class="easyui-numberbox" name="SortOrder" value="@Model.SortOrder" style="width:150px;" /></td>
+                </tr>
+            </table>
+            <input type="hidden" name="MenuID" value="@Model.MenuID" />
+            <input type="hidden" name="ParentID" value="@Model.ParentID" id="hidPid" />
+            <input type="hidden" name="RightsTypeID" value="@Model.RightsTypeID" id="hidRightsTypeID" />
+            <input type="hidden" name="RightsID" value="@Model.RightsID" id="hidRightsID" />
+        </form>
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right; height:33px; padding:3px 10px 0;">
+        <a class="easyui-linkbutton" id="btn_saveItem" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="saveData()" style="width:80px">保存</a>
+    </div>
+</div>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/clear.js")"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#sltMenuType').val("@Model.MenuType");//经过测试,可以的
+        $("#sltMenuType").combobox({
+            onChange: function (val, index) {
+                if (val == "1") {
+                    $("#trRights").css("display", "");
+                }
+                else {
+                    $("#trRights").css("display", "none");
+                }
+            }
+        });
+        //$('#sltMenuType').combobox('setValue', '@Model.MenuType');//经过测试 不行
+        //$('#sltMenuType').combobox('select', '@Model.MenuType');//经过测试,不行
+        $("#menuTree").combotree({
+            url: rootUrl+"Menu/GetSubList?t=" + Math.random()+"&selfId=@Model.MenuID",
+            method: "get",
+            required: false,
+            panelHeight: 200,
+            value: $("#hidPid").val() == "0" ? "" : $("#hidPid").val()
+        }).combobox();
+
+        if(@Model.MenuType==1)
+        {
+            $("#trRights").css("display", "");
+        }
+        var rightsTypeTree = $('#rightsTypeTree').combotree({
+            url: rootUrl+"RightsType/GetTreeList?t=" + Math.random(),
+            editable: false,
+            valueField: 'id',
+            textField: 'text',
+            value: $("#hidRightsTypeID").val() == "0" ? "" : $("#hidRightsTypeID").val(),
+            onSelect: function (data) {
+                //刷新数据，重新读取省份下的城市，并清空当前输入的值
+                rightsTree.combobox({
+                    disabled: false,
+                    url: rootUrl+"Rights/GetMenuRights?id=" + data.id + "&t=" + Math.random(),
+                    valueField: 'id',
+                    textField: 'text',
+                    value: $("#hidRightsID").val() == "0" ? "" : $("#hidRightsID").val(),
+                }).combobox();
+            }
+        });
+        rightsTree = $('#rightsTree').combobox({
+            disabled: true,
+            url: rootUrl+"Rights/GetMenuRights?id=@Model.RightsTypeID&t=" + Math.random(),
+            valueField: 'id',
+            textField: 'text',
+            value: $("#hidRightsID").val() == "0" ? "" : $("#hidRightsID").val(),
+        });
+
+    });
+
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-textbox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).textbox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+    function saveData() {
+        triminput("#add_data");
+        var flag = formIsValid();
+        if (!flag)
+        {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        var pid = $("#menuTree").combotree("getValue");
+        if (pid == undefined || pid == "") {
+            $("#hidPid").val("0");
+        }
+        else {
+            $("#hidPid").val(pid);
+        }
+        var rightsTypeID = $("#rightsTypeTree").combotree("getValue");
+        if (rightsTypeID == undefined || rightsTypeID == "") {
+            $("#hidRightsTypeID").val("0");
+        }
+        else {
+            $("#hidRightsTypeID").val(rightsTypeID);
+        }
+
+        var rightsID = $("#rightsTree").combotree("getValue");
+        if (rightsID == undefined || rightsID == "") {
+            $("#hidRightsID").val("0");
+        }
+        else {
+            $("#hidRightsID").val(rightsID);
+        }
+
+        var data = $("#add_data").serialize();
+
+        //显示遮罩,by michael in 2014/7/9
+        loading({ btn: 'btn_saveItem' });
+
+        $.ajax({
+            type: "POST",
+            url: rootUrl+"Menu/Edit",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            reloadData();
+                            closeDialog();
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>
+

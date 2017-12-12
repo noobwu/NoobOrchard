@@ -1,0 +1,133 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "添加权限分类";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">添加权限分类</h4>
+</div>
+<!-- BEGIN CONTENT BODY -->
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet light portlet-fit portlet-form ">
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form action="#" id="submitForm" class="form-horizontal">
+                        @Html.AntiForgeryToken()
+                        <div class="form-body">
+                            <div class="alert alert-danger display-hide">
+                                <button class="close" data-close="alert"></button>有必填项为空或输入数据格式不对，请检查！
+                            </div>
+                            <div class="alert alert-success display-hide">
+                                <button class="close" data-close="alert"></button> 验证成功!
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">
+                                    权限类别名称：
+                                    <span class="required"> * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" name="TypeName"  required="required" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">
+                                    父级权限类别：
+                                </label>
+                                <div class="col-md-4">
+                                    <div class="portlet-body">
+                                        <div id="treeParentID" class="jstree">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">
+                                    排序大小：
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" name="SortOrder" value="0" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class="btn green">保存</button>&nbsp;&nbsp;
+                                    <button type="button" class="btn default" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="ParentID" value="@ViewBag.pid"  id="hidPid" />
+                    </form>
+                    <!-- END FORM-->
+                </div>
+                <!-- END VALIDATION STATES-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTENT BODY -->
+<link href="../../Content/theme/metronic/assets/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
+<script src="../../Content/theme/metronic/assets/global/plugins/jstree/dist/jstree.min.js" type="text/javascript"></script>
+<script src="../../Content/theme/metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="../../Content/theme/metronic/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+
+<script src="../../Scripts/Admin/form-validation.js" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/clear.js")"></script>
+<script type="text/javascript">
+    $(function () {
+        var parentId=$("#hidPid").val() == "0" ? "" : $("#hidPid").val();
+        var treeParentID=$('#treeParentID').jstree({
+		    'core' : {
+			    'data' : {
+				    "url" : rootUrl+"RightsType/GetSubList?t=" + Math.random()+"&id="+parentId,
+				    "dataType":"json" // needed only if you do not supply JSON headers
+			    }
+		    }
+	    });
+	    $(treeParentID).bind("select_node.jstree", function(evt, data) {
+		if(data&&data.selected&&data.node)
+		{
+			if(parentId==data.selected[0])
+			{
+			    parentId="";
+			    //$('#treeParentID').jstree("deselect_all");//取消所有选中的节点
+			    $('#treeParentID').jstree("deselect_node",data.node);//取消选中的当前节点
+			}
+			else
+			{
+			    parentId=data.selected[0];
+			}
+	        $("#hidPid").val(parentId)
+		}
+        });
+        $(treeParentID).bind("deselect_node.jstree", function(evt, data) {
+            //console.log("deselected!");
+        });
+    });
+    function saveData() {
+        trimInput("#submitForm");
+        var data = $("#submitForm").serialize();
+        $.ajaxPost({
+            url: rootUrl + "RightsType/Create",
+            data: data,
+            handleSuccess: function (data) {
+                showMessage('保存成功。', true);
+            },
+        });
+    }
+    function showMessage(msg, success) {
+        if (success) {
+            reloadData();
+        }
+        else {
+            //swal("提示!", msg, "error");
+            showToast(msg);
+        }
+    }
+</script>

@@ -1,0 +1,143 @@
+﻿     <!-- BEGIN CONTENT BODY -->
+<div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <!-- BEGIN THEME PANEL -->
+    @Html.Partial("_Metronic_Theme")
+    <!-- END THEME PANEL -->
+    <h1 class="page-title">
+        菜单管理
+        <small>菜单管理</small>
+    </h1>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="../../Home">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">系统管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">权限管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <span>菜单管理</span>
+            </li>
+        </ul>
+        <div class="page-toolbar">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                    Actions
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li>
+                        <a href="#">
+                            <i class="icon-bell"></i> Action
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-shield"></i> Another action
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-user"></i> Something else here
+                        </a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-bag"></i> Separated link
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="note note-danger">
+                <p> NOTE: The below datatable is not connected to a real database so the filter and sorting is just simulated for demo purposes only. </p>
+            </div>
+            <!-- Begin: TreeGrid  -->
+            <div class="portlet light portlet-fit portlet-datatable ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject font-dark sbold uppercase">菜单管理</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm active">
+                                <input type="radio" name="options" class="toggle" id="option1">Actions
+                            </label>
+                            <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm">
+                                <input type="radio" name="options" class="toggle" id="option2">Settings
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn red btn-outline btn-circle" href="javascript:;" data-toggle="dropdown">
+                                <i class="fa fa-share"></i>
+                                <span class="hidden-xs"> Tools </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="javascript:;"> Export to Excel </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> Export to CSV </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> Export to XML </a>
+                                </li>
+                                <li class="divider"> </li>
+                                <li>
+                                    <a href="javascript:;"> Print Invoices </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-container">
+                        <table class="table table-hover treegrid-tree" id="tg"></table>
+                    </div>
+                </div>
+            </div>
+            <!-- End: TreeGrid -->
+        </div>
+    </div>
+</div>
+<!-- END CONTENT BODY -->
+
+@section Meta{
+    <title>菜单管理</title>
+}
+
+@section PageLevelPluginsStyles{
+    <link href="../../Content/theme/metronic/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/theme/metronic/assets/global/plugins/jquery-treegrid/css/jquery.treegrid.css" rel="stylesheet" type="text/css" />
+}
+
+@section PageLevelPluginsScripts{
+    <script src="../../Content/theme/metronic/assets/global/scripts/datatable.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/jquery-treegrid/js/jquery.treegrid.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/jquery-treegrid/js/jquery.treegrid.bootstrap3.js" type="text/javascript"></script>
+    <script src="../../Content/theme/metronic/assets/global/plugins/jquery-treegrid/js/jquery.treegrid.extension.js" type="text/javascript"></script>
+}
+
+@section PageLevelScripts
+{
+    <script src="../../Scripts/Admin/Admin/Menu.js?id=1" type="text/javascript"></script>
+}

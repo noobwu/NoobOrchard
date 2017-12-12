@@ -1,0 +1,113 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "添加广告位";
+}
+@model Noob.Web.Admin.Models.CmsAdvPositionModel
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%">
+                <tr>
+                    <td align="right">广告位编号：</td>
+                    <td><input type="text" id="txtAdvPositionCode" class="easyui-textbox" data-options='required:true,validType: "length[0,50]"' name="AdvPositionCode" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">广告位名称：</td>
+                    <td><input type="text" id="txtAdvPositionName" class="easyui-textbox" data-options='required:true,validType: "length[0,50]"' name="AdvPositionName" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">广告位宽度：</td>
+                    <td><input type="text" id="txtWidth" value="0" class="easyui-textbox" data-options='required:true,validType: "number"' name="Width" style="width:50px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">广告位高度：</td>
+                    <td><input type="text" id="txtHeight" value="0" class="easyui-textbox" data-options='required:true,validType: "number"' name="Height" style="width:50px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">广告位状态：</td>
+                    <td>
+                        <select name="Status" id="sltStatus" style="width:126px;" class="easyui-combobox" editable="false" data-options='panelHeight:50,required:true'>
+                            <option value="1" selected="selected">启用</option>
+                            <option value="0">禁用</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">排序：</td>
+                    <td><input type="text" id="txtSortOrder" value="0" class="easyui-textbox" data-options='required:true,validType: "number"' name="SortOrder" style="width:80px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right">描述：</td>
+                    <td><input type="text" id="txtRemark" class="easyui-textbox" data-options='required:true,multiline:true,validType: "length[0,300]"' name="Remark" style="height:80px;width:180px" /></td>
+                </tr>
+            </table>
+
+        </form>
+
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right; height:33px; padding:3px 10px 0;">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btn_saveItem" href="javascript:void(0)" onclick="saveData()" style="width:80px">保存</a>
+    </div>
+</div>
+<script type="text/javascript">
+    //初始化值
+    $(function () {
+        //checkIsEdit();
+    });
+
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-validatebox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).validatebox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+    function saveData() {
+        var flag = formIsValid();
+        if (!flag) {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        var data = $("#add_data").serialize();
+        $.ajax({
+            type: "POST",
+            url: rootUrl + "AdvPosition/Create",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            reloadData();
+                            closeDialog();
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>
+

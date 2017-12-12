@@ -1,0 +1,307 @@
+﻿@{
+    ViewBag.Title = "新增短信配置";
+}
+<style type="text/css">
+    .tdTitle {
+        width: 180px;
+    }
+
+    .form-group {
+        height: 32px;
+        line-height: 32px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
+    .pay-label {
+        margin-left: 15px;
+        float: left;
+        width: 135px;
+        height: 24px;
+        line-height: 24px;
+    }
+
+    .pay-form {
+        float: left;
+        margin-left: 5px;
+        height: 24px;
+        line-height: 24px;
+    }
+</style>
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-header table-body" style="overflow:hidden">
+                <tr>
+                    <td align="right" class="tdTitle">第三方短信接口类型：</td>
+                    <td>
+                        <select id="sltSMSType" style="width:126px;" class="easyui-combobox easyui-validatebox" editable="false" data-options='panelHeight:100,required:true'>
+                            <option value="56SMS">56短信网</option>
+                            <option value="OtherSMS" selected="selected">其它短信</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">短信接口标识：</td>
+                    <td><input type="text" id="txtConfigCode" name="ConfigCode" class="easyui-textbox" style="width:300px" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">接口名称：</td>
+                    <td><input type="text" id="txtConfigName" name="ConfigName" class="easyui-textbox" style="width:300px" data-options="required:true" /><span style="color:Red;margin-left:5px">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">配置信息：</td>
+                    <td>
+                        <div id="divOtherSMS">
+                            <input type="text" name="ConfigValue" id="txtConfigValue" class="easyui-textbox" data-options='required:true,multiline:true' style="height:80px;width:400px" />
+                            <span style="color:Red;margin-left:5px">*</span>
+                        </div>
+                        <!--56短信网配置开始-->
+                        <div id="div56SMS" style="display:none;">
+                            <div class="form-group">
+                                <label class="pay-label">语音地址：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_SpeakUrl" value="http://jiekou.56dxw.com/sms/SpeakNoteInterface.aspx" class="easyui-textbox" data-options='required:true' style="width:400px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">短信地址：</label>
+                                <div class="pay-form">
+                                    @*密码md5加密接口地址:http://jiekou.56dxw.com/sms/HttpInterfaceMd5.aspx*@
+                                    <input type="text" id="56SMS_Url" value="http://jiekou.56dxw.com/sms/HttpInterface.aspx" class="easyui-textbox" data-options='required:true' style="width:400px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">多条短信Http发送URL：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_MoreUrl" value="http://jiekou.56dxw.com/sms/HttpInterfaceMore.aspx" class="easyui-textbox" data-options='required:true' style="width:400px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">WebService短信地址：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_WebServiceUrl" value="http://jiekou.56dxw.com/WebServiceInterface.asmx" class="easyui-textbox" data-options='required:true' style="width:400px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">用户地址：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_UserUrl" value="http://jiekou.56dxw.com/sms/HttpInterfaceR.aspx" class="easyui-textbox" data-options='required:true' style="width:400px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">短信签名：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_Sign" value="【互联网】" class="easyui-textbox" data-options='required:true' style="width:150px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">企业ID：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_ComId" value="" class="easyui-textbox" data-options='required:true' style="width:150px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">用户名：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_UserName" value="" class="easyui-textbox" data-options='required:true' style="width:150px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">密码：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_UserPwd" value="" class="easyui-textbox" data-options='required:true' style="width:150px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">所属平台：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_SMSNumber" value="10690" class="easyui-textbox" data-options='required:true' style="width:150px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">多少字/条：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_ContentCount" value="64" class="easyui-textbox" data-options='required:true' style="width:150px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">字符编码：</label>
+                                <div class="pay-form">
+                                    <select id="56SMS_Encoding" style="width:126px;" class="easyui-combobox" editable="false" data-options='panelHeight:50,required:true'>
+                                        <option value="GB2312" selected="selected">GB2312</option>
+                                    </select>
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">密码是否Md5l加密：</label>
+                                <div class="pay-form">
+                                    <select id="56SMS_MD5" style="width:126px;" class="easyui-combobox" editable="false" data-options='panelHeight:50,required:true'>
+                                        <option value="true" selected="selected">是</option>
+                                        <option value="false">否</option>
+                                    </select>
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pay-label">是否是测试环境：</label>
+                                <div class="pay-form">
+                                    <input type="text" id="56SMS_Test" value="2C8C8EA90E428B40A8BE5AB9DED6C460" class="easyui-textbox" data-options='required:true' style="width:400px;" />
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                           
+                        </div>
+                        <!--56短信配置结束-->
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">状态：</td>
+                    <td>
+                        <select name="Status" id="sltStatus" style="width:126px;" class="easyui-combobox easyui-validatebox" editable="false" data-options='panelHeight:150,required:true'>
+                            <option value="0">关闭</option>   
+                           <option value="1" selected="selected">开启</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">排序：</td>
+                    <td>
+                        <input type="text" id="txtSortOrder" value="0" class="easyui-textbox easyui-validatebox" data-options='required:true,validType: "number"' name="SortOrder" style="width:80px;" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">描述：</td>
+                    <td>
+                        <input type="text" id="txtRemark" class="easyui-textbox easyui-validatebox" data-options='required:true,multiline:true,validType: "length[0,300]"' name="Remark" style="height:80px;width:300px" />
+                        <span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="ConfigGroupName" value="SMSConfig" />
+        </form>
+
+    </div>
+    <div data-options="region:'north',border:false" class="divNorthDetail">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btn_saveItem" href="javascript:void(0)" onclick="saveData()" style="width:80px">保存</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" id="btn_saveItem" href="javascript:void(0)" onclick="closeWin()" style="width:80px">取消</a>
+    </div>
+</div>
+<script type="text/javascript">
+    //初始化值
+    $(function () {
+        //checkIsEdit();
+        init();
+    });
+    function closeWin() {
+        parent.closedTabs("新增短信配置");
+    }
+    function init()
+    {
+        $('#sltSMSType').combobox({
+            onSelect: function (record) {
+                var smsType = $('#sltSMSType').combobox('getValue');
+                switch (smsType) {
+                    case "56SMS":
+                        $("#txtConfigName").textbox('setValue', '56短信网')//赋值
+                        $("#txtConfigCode").textbox('setValue', '56SMS')//赋值
+                        //$.parser.parse($("#txtPayName"));
+
+                        $("#div56SMS").css("display", "");
+                        $("#divOtherSMS").css("display", "none");
+                        break;
+                    default:
+                        $("#div56SMS").css("display", "none");
+                        $("#divOtherSMS").css("display", "");
+                        break;
+
+                }
+            }
+        });
+    }
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-validatebox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).validatebox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+    function getConfigValue()
+    {
+        var smsType = $('#sltSMSType').combobox('getValue');
+        var tmpValue = '{}';
+        switch (smsType) {
+            case "56SMS":
+                tmpValue = '{"SpeakUrl":"' + $("#56SMS_SpeakUrl").val() + '","Url":"' + $("#56SMS_Url").val() + '","MoreUrl":"' + $("#56SMS_MoreUrl").val() + '","WebServiceUrl":"' + $("#56SMS_WebServiceUrl").val() + '","UserUrl":"' + $("#56SMS_UserUrl").val() + '","Encoding":"' + $('#56SMS_Encoding').combobox('getValue') + '","ContentCount":' + $("#56SMS_ContentCount").val() + ',"Sign":"' + $("#56SMS_Sign").val() + '","ComId":"' + $("#56SMS_ComId").val() + '","UserName":"' + $("#56SMS_UserName").val() + '","UserPwd":"' + $("#56SMS_UserPwd").val() + '","SMSNumber":"' + $("#56SMS_SMSNumber").val() + '","MD5":"' + $('#56SMS_MD5').val() + '","Test":"' + $("#56SMS_Test").val() + '"}';
+                break;
+            default:
+                tmpValue = '{}';
+                break;
+        }
+        //console.log(tmpValue);
+        //$("#txtConfigValue").textbox('setValue', tmpValue)//赋值
+        $("[name='ConfigValue']").val(tmpValue)
+    }
+    function saveData() {
+        getConfigValue();
+        var flag = formIsValid();
+        if (!flag) {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        var data = $("#add_data").serialize();
+        $.ajax({
+            type: "POST",
+            url: rootUrl+"Configs/Create",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            parent.openTab("短信配置", rootUrl + "SMS/Config");
+                            parent.closedTabs("新增短信配置");
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>
+

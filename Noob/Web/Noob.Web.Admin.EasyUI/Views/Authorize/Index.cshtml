@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "授权";
+    Layout = null;
+}
+<style type="text/css">
+    .tree-folder {
+        width: 0px;
+    }
+
+    .tree-file {
+        width: 0px;
+    }
+</style>
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'" style="padding:10px;">
+        <table id="tg"></table>
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:center; height:36px; padding:3px 10px 0; line-height:26px; margin-bottom:5px;">
+        <a class="easyui-linkbutton" id="btn_saveItem" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="saveModule()" style="width:80px">保存</a>
+    </div>
+</div>
+    <script type="text/javascript">
+        var id=@ViewBag.id;
+        var type=@ViewBag.type;
+    </script>
+    <script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/Admin/Authorize.js")"></script>

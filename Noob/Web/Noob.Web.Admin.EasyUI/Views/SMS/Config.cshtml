@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "短信配置";
+}
+
+<div data-options="region:'center',border:false" class="divCenter">
+    <table id="dg"></table>
+    <div id="tbar" style="text-align:right">
+        <a href="javascript:void(0)" onclick="openDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin-right:15px;display:@ViewBag.Create">新增</a>
+    </div>
+    <input type="hidden" value="@ViewBag.Edit" id="hidIsEdit" />
+</div>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/SMS/Config.js")"></script>

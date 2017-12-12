@@ -1,0 +1,254 @@
+﻿@model Noob.Web.Admin.Models.CmsNewsModel
+@{
+    ViewBag.Title = "编辑资讯";
+}
+<style type="text/css">
+    .tdTitle {
+        width: 100px;
+    }
+     #ImageUrl_filelist {MARGIN: auto;WIDTH: 190px;}
+#ImageUrl_filelist img{MAX-WIDTH: 100%!important;HEIGHT: auto!important;width:expression(this.width > 190 ? "190px" : this.width)!important;}
+</style>
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center'">
+        <form id="add_data" action="">
+            @Html.AntiForgeryToken()
+            <table border="0" cellspacing="0" cellpadding="0" class="table-header table-body" style="width:100%;overflow:hidden">
+                <tr>
+                   <td align="right" class="tdTitle">标题：</td>
+                    <td><input type="text" value="@Model.Title" id="txtTitle" class="easyui-textbox easyui-validatebox" data-options='validType: "length[0,200]"' name="Title" style="width:300px;" /></td>
+                </tr>
+
+                <tr style="height:100px;">
+                    <td align="right" class="tdTitle">图片：</td>
+                    <td>
+                        <!--image_upload container start-->
+                        <div id="image_upload_container" class="image_upload_container">
+                            <!--头部，相册选择和格式选择-->
+                            <div id="uploader" class="image_upload">
+                                <div class="queueList">
+                                    <div id="dndArea" class="placeholder">
+                                        <div id="filePicker"></div>
+                                        <p>或将照片拖到这里</p>
+                                    </div>
+                                </div>
+                                <div class="statusBar" style="display:none;">
+                                    <div class="progress">
+                                        <span class="text">0%</span>
+                                        <span class="percentage"></span>
+                                    </div><div class="info"></div>
+                                    <div class="btns">
+                                        <div id="filePicker2" class="filePicker2"></div><div class="uploadBtn">开始上传</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--image_upload container end -->
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle"> 资讯分类：</td>
+                    <td>
+                        <input type="text" id="sltCategoryId" name="CategoryId" class="easyui-combobox" editable="false" data-options='panelHeight:100' />
+                        <span style="color:Red">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">类型：</td>
+                    <td>
+                        <select id="sltNewsType" name="NewsType" class="easyui-combobox" style="width:150px;">
+                            <option selected="selected" value="0">资讯</option>
+                            <option selected="selected" value="1">视频资讯</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                   <td align="right" class="tdTitle">导读内容：</td>
+                    <td><input type="text" value="@Model.NaviContent" id="txtNaviContent" class="easyui-textbox easyui-validatebox" data-options='validType: "length[0,16]"' name="NaviContent" style="width:300px;" /></td>
+                </tr>
+                <tr>
+                   <td align="right" class="tdTitle">发布时间：</td>
+                    <td><input type="text" value="@Model.ReleaseTime" id="txtReleaseTime" class="easyui-datebox easyui-validatebox" data-options='required:true' name="ReleaseTime" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                   <td align="right" class="tdTitle">内容来源：</td>
+                    <td><input type="text" value="@Model.ContentSource" id="txtContentSource" class="easyui-textbox easyui-validatebox" data-options='validType: "length[0,200]"' name="ContentSource" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                   <td align="right" class="tdTitle">作者：</td>
+                    <td><input type="text" value="@Model.Author" id="txtAuthor" class="easyui-textbox easyui-validatebox" data-options='validType: "length[0,50]"' name="Author" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                   <td align="right" class="tdTitle">标签：</td>
+                    <td><input type="text" value="@Model.Tag" id="txtTag" class="easyui-textbox easyui-validatebox" data-options='validType: "length[0,100]"' name="Tag" style="width:150px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle">状态：</td>
+                    <td>
+                        <select name="Status" id="sltStatus" style="width:126px;" class="easyui-combobox easyui-validatebox" editable="false" data-options='panelHeight:100,required:true'>
+                            <option value="1" selected="selected">启用</option>
+                            <option value="0">禁用</option>
+                        </select><span style="color:Red;margin-left:5px">*</span>
+                    </td>
+                </tr>
+                <tr>
+                   <td align="right" class="tdTitle">排序：</td>
+                    <td><input type="text" value="@Model.SortOrder" id="txtSortOrder" class="easyui-textbox easyui-validatebox" data-options='required:true,validType: "number"' name="SortOrder" style="width:50px;" /></td>
+                </tr>
+                <tr>
+                    <td align="right" class="tdTitle"> 新闻内容：</td>
+                    <td>
+                        <input type="hidden" id="txtNewsContent" name="NewsContent" />
+                        <script id="ueditorNewsContent" type="text/plain" style="width:95%;height:400px;">
+                        </script>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="NewsId" value="@Model.NewsId" />
+        </form>
+
+    </div>
+    <div data-options="region:'north',border:false" class="divNorthDetail">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btn_saveItem" href="javascript:void(0)" onclick="saveData()" style="width:80px">保存</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" id="btn_cancelItem" href="javascript:void(0)" onclick="closeWin()" style="width:80px">取消</a>
+    </div>
+</div>
+<script type="text/javascript" src="@Url.Content(ViewBag.RootUrl + "Scripts/Admin/clear.js")"></script>
+<!--webuploader 开始-->
+<link rel="stylesheet" type="text/css" href="@Url.Content(ViewBag.RootUrl + "Scripts/webuploader/webuploader.css")">
+<link rel="stylesheet" type="text/css" href="@Url.Content(ViewBag.RootUrl + "Scripts/webuploader/css/image_uploads_admin.css")">
+<script type="text/javascript" src='@Url.Content(ViewBag.RootUrl + "Scripts/webuploader/webuploader.min.js")'></script>
+<script type="text/javascript" src='@Url.Content(ViewBag.RootUrl + "Scripts/webuploader/js/image_uploads.js")'></script>
+<!--webuploader 结束-->
+<!--UEditor 开始-->
+<script type="text/javascript" charset="utf-8" src='@Url.Content(ViewBag.RootUrl + "Scripts/UEditor/dev-1.5.0/ueditor.config.admin.js")'></script>
+<script type="text/javascript" charset="utf-8" src='@Url.Content(ViewBag.RootUrl + "Scripts/UEditor/dev-1.5.0/ueditor.all.min.js")'> </script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src='@Url.Content(ViewBag.RootUrl + "Scripts/UEditor/dev-1.5.0/lang/zh-cn/zh-cn.js")'></script>
+<!--UEditor 开始-->
+
+<script type="text/javascript">
+    var rootUrl = '/';
+    var uploadUrl = "/Uploads";
+    initValue();
+    $(function () {
+        init();
+    });
+    function initValue() {
+        $("#sltStatus").val('@Model.Status');
+        $("#sltNewsType").val('@Model.NewsType');
+    }
+    function init() {
+        $("#sltCategoryId").combotree({
+            url: rootUrl + "NewsCategory/GetSubList?t=" + Math.random(),
+            method: "get",
+            required: false,
+            panelHeight: 200,
+            value: '@Model.CategoryId'
+        }).combobox("initClear");
+
+          /* ----------------image_upload Start--------------------- */
+        var imgFiles = [
+            {
+                fileSize: 4 * 1024 * 1024,
+                filePath: '@Model.ImageUrl'
+            }
+        ];
+        initUploads({ auto: true, imgDir: 'News/Images',  fileDatas: imgFiles });
+        /* ----------------image_upload End--------------------- */
+
+
+        var objEditor = UE.getEditor('ueditorNewsContent');
+        //var test = setTimeout(function () {
+        //}, 2000);
+        //objEditor.setContent('hello');
+        //清理方法 clearTimeout(test)
+        //objEditor.execCommand('insertHtml', '');//插入html代码
+        //objEditor.setContent('', true);//可以设置编辑器的内容
+        objEditor.ready(function () {
+                objEditor.setContent('@Html.Raw(Model.NewsContent)'); //可以设置编辑器的内容
+        });
+    }
+    function closeWin() {
+        parent.closedTabs("修改资讯");
+    }
+    function formIsValid() {
+        //获取form id=add_data ，下html为input，css类为easyui-validatebox 的所有对象
+        var validHtml = $("#add_data input.easyui-validatebox");
+        var flag = true;
+        for (var i = 0; i < validHtml.length; i++) {
+            //对每个对象进行验证，如果不通过则退出
+            flag = $(validHtml[i]).validatebox("isValid");
+            if (!flag) {
+                break;
+            }
+        }
+        return flag;
+    }
+    function saveData() {
+        triminput("#add_data");
+        var objEditor = UE.getEditor('ueditorNewsContent');
+        // var  htmlCode = objEditor.getAllHtml();
+        //var htmlCode = objEditor.getPlainTxt();//可以获得编辑器的带格式的纯文本内容
+
+        /*
+        当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+        var range =objEditor.selection.getRange();
+        range.select();
+        var txt = objEditor.selection.getText();
+        */
+
+        // var htmlCode = objEditor.getContentTxt() 获得编辑器的纯文本内容
+        var content = objEditor.getContent();//可以获得编辑器的内容
+        if (!objEditor.hasContents())////判断编辑器里是否有内容
+        {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        $("input[name='NewsContent']").val(content);
+        var flag = formIsValid();
+        if (!flag) {
+            $.messager.alert('提示', '有必填项为空或输入数据格式不对，请检查！', 'error');
+            return;
+        }
+        var data = $("#add_data").serialize();
+
+        //显示遮罩,by michael in 2014/7/9
+        loading({ btn: 'btn_saveItem' });
+
+        $.ajax({
+            type: "POST",
+            url: rootUrl + "News/Edit",
+            data: data,
+            success: function (data) {
+                //隐藏遮罩,by michael in 2014/7/9
+                loaded({ btn: 'btn_saveItem' });
+                if (data.Code != undefined) {
+                    if (data.Code == 1) {
+                        $.messager.alert('提示', '保存成功。', 'info', function () {
+                            parent.openTab("资讯管理", rootUrl + "News/Index?refresh=1");
+                            parent.closedTabs("修改资讯");
+                        });
+                    }
+                    else {
+                        $.messager.alert('提示', data.Msg, 'error');
+                    }
+                }
+                else {
+                    $.messager.alert('提示', '系统错误，请联系管理人员！', 'error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+                //console.log(errorThrown);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+</script>
+

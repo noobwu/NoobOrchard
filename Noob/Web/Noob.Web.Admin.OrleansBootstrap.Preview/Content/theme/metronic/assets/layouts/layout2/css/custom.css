@@ -1,0 +1,61 @@
+﻿/* dataTables列内容居中 */
+.table > tbody > tr > td {
+    text-align: center;
+}
+/* dataTables表头居中 */
+.table > thead:first-child > tr:first-child > th {
+    text-align: center;
+}
+
+table.dataTable>tbody>tr.child>td {
+    text-align: left;
+}
+table.dataTable>tbody>tr.child>td> .dtr-title {
+    margin-right: 15px;
+}
+
+/*treegrid-tree 表头第一个居左*/
+.treegrid-tree> thead:first-child > tr:first-child > th:first-child {
+    text-align: left;
+    padding-left: 20px;
+}
+
+/*treegrid-tree 第一列内容居左 */
+.treegrid-tree > tbody> tr > td:first-child {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.mt-checkbox > span > label.checked {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #888888;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    position: absolute;
+}
+
+.mt-checkbox > span > label.checked2 {
+    left: 2px;
+    top: 3px;
+    width: 12px;
+    height: 10px;
+    border: solid #888888;
+    border-width: 2px 2px 2px 2px;
+    transform: rotate(180deg);
+    position: absolute;
+}
+
+.dataTable-search-filter
+{
+    float: left;
+    margin-right: 20px;
+}
+.dataTable-search-button
+{
+    float: right;
+    margin-right: 10px;
+}
+
